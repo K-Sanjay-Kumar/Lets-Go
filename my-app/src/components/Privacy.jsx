@@ -1,0 +1,21 @@
+import React from 'react'
+
+const Privacy = () => {
+    return (
+        <>
+            <div className='terms'>
+                <h1>Tourly Privacy Policy</h1>
+                <h3>Privacy policy</h3>
+                <p className='span'>This privacy policy ("Policy") describes how the personally identifiable information ("Personal Information") you may provide on the tourly.pt website ("Website" or "Service") and any of its related products and services (collectively, "Services") is collected, protected and used. It also describes the choices available to you regarding our use of your Personal Information and how you can access and update this information. This Policy is a legally binding agreement between you ("User", "you" or "your") and Elgoritmo ("Elgoritmo", "we", "us" or "our"). By accessing and using the Website and Services, you acknowledge that you have read, understood, and agree to be bound by the terms of this Policy. This Policy does not apply to the practices of companies that we do not own or control, or to individuals that we do not employ or manage.</p>
+                <h4>Automatic collection of information</h4>
+                <p>When you open the Website, our servers automatically record information that your browser sends. This data may include information such as your device's IP address, browser type and version, operating system type and version, language preferences or the webpage you were visiting before you came to the Website and Services, pages of the Website and Services that you visit, the time spent on those pages, information you search for on the Website, access times and dates, and other statistics.</p>
+                <h4>Collection of personal information</h4>
+                <p>You can access and use the Website and Services without telling us who you are or revealing any information by which someone could identify you as a specific, identifiable individual. If, however, you wish to use some of the features on the Website, you may be asked to provide certain Personal Information (for example, your name and e-mail address). We receive and store any information you knowingly provide to us when you create an account, publish content, make a purchase, or fill any online forms on the Website. When required, this information may include the following:Personal details such as name, country of residence, etc.Contact information such as email address, address, etc.Account details such as user name, unique user ID, password, etc.Proof of identity such as photocopy of a government ID.Payment information such as credit card details, bank details, etc. Geolocation data such as latitude and longitude.Any other materials you willingly submit to us such as articles, images, feedback, etc.</p>
+                <h4>Billing and payments</h4>
+                <p>You shall pay all fees or charges to your account in accordance with the fees, charges, and billing terms in effect at the time a fee or charge is due and payable. Sensitive and private data exchange happens over a SSL secured communication channel and is encrypted and protected with digital signatures, and the Services are also in compliance with PCI vulnerability standards in order to create as secure of an environment as possible for Users. Scans for malware are performed on a regular basis for additional security and protection. If, in our judgment, your purchase constitutes a high-risk transaction, we will require you to provide us with a copy of your valid government-issued photo identification, and possibly a copy of a recent bank statement for the credit or debit card used for the purchase. We reserve the right to change products and product pricing at any time. We also reserve the right to refuse any order you place with us. We may, in our sole discretion, limit or cancel quantities purchased per person, per household or per order. These restrictions may include orders placed by or under the same customer account, the same credit card, and/or orders that use the same billing and/or shipping address. In the event that we make a change to or cancel an order, we may attempt to notify you by contacting the e-mail and/or billing address/phone number provided at the time the order was made.</p>
+            </div>
+        </>
+    )
+}
+
+export default Privacy
