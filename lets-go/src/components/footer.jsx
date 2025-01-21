@@ -8,23 +8,23 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 const Footer = () => {
     return (
         <>
-            <footer class="bg-body-tertiary text-center mt-5">
-                <div class="container p-4 pb-0">
-                    <section class="">
+            <footer className="bg-body-tertiary text-center mt-5">
+                <div className="container p-4 pb-0">
+                    <section className="">
                         <form action="">
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-auto">
-                                    <p class="pt-2">
+                            <div className="row d-flex justify-content-center">
+                                <div className="col-auto">
+                                    <p className="pt-2">
                                         <strong>Sign up to start your trip</strong>
                                     </p>
                                 </div>
-                                <div class="col-md-5 col-12">
-                                    <div data-mdb-input-init class="form-outline mb-4">
-                                        <input type="email" id="form5Example26" class="form-control" placeholder='abc@gmail.com' />
+                                <div className="col-md-5 col-12">
+                                    <div data-mdb-input-init className="form-outline mb-4">
+                                        <input type="email" id="form5Example26" className="form-control" placeholder='abc@gmail.com' />
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <button data-mdb-ripple-init type="submit" class="btn btn-primary mb-4">
+                                <div className="col-auto">
+                                    <button data-mdb-ripple-init type="submit" className="btn btn-primary mb-4">
                                         Subscribe
                                     </button>
                                 </div>
@@ -33,9 +33,9 @@ const Footer = () => {
                     </section>
                 </div>
 
-                <div class="text-center p-3">
+                <div className="text-center p-3">
                     © {new Date().getFullYear()} Copyright:
-                    <a class="text-body" href="/">Lets Go</a>
+                    <a className="text-body" href="/">Lets Go</a>
                 </div>
             </footer>
         </>

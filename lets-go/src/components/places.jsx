@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import Header from "./header";
 import Footer from "./footer";
 import "../assets/css/places.css";
+import Card from "../constants/Card";
 import image1 from "../assets/images/bg-image-1.jpg";
 import image2 from "../assets/images/bg-image-2.png";
 import image3 from "../assets/images/bg-image-3.jpg";
 import { FaSearch } from "react-icons/fa";
 import { IoMdTime } from "react-icons/io";
-import { FaRegUser } from "react-icons/fa";
+
 
 function Places() {
   const [currentBackground, setCurrentBackground] = useState(0);
@@ -21,6 +22,14 @@ function Places() {
 
     return () => clearInterval(interval);
   }, [backgrounds.length]);
+
+  const travelData = [
+    { id: 1, image: image1, guests: '5 to 10', title: "Beach Vacation", travelType: "Family", price: 1000 },
+    { id: 2, image: image2, guests: '1', title: "Mountain Hiking", travelType: "Solo", price: 800 },
+    { id: 3, image: image3, guests: '2', title: "City Exploration", travelType: "Couple", price: 1200 },
+    { id: 4, image: image1, guests: '3 to 4', title: "Desert Safari", travelType: "Friends", price: 900 },
+    { id: 5, image: image2, guests: '5 to 10', title: "Cruise Getaway", travelType: "Family", price: 1500 },
+];
 
   return (
     <>
@@ -100,105 +109,21 @@ function Places() {
         <div className="places-cards container">
             <div className="row" style={{rowGap: '20px'}}>
 
-                <div className="col-md-4">
-                    <div className="card">
-                        <img className="card-img-top" src={image1} alt="Card image cap" />
-                        <div className="card-body">
-                            <h5 className="card-title">Maldives</h5>
-                            <div className="card-text">
-                                <span><IoMdTime /> 2 days 3 nights</span>
-                                <span><FaRegUser /> 2 guests <span className="travel-type">(couple)</span></span>
-                            </div>
-
-                            <div className="card_footer mt-4" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <p><b style={{ fontSize: '20px' }}>Rs. 19,000</b> <span style={{ color: 'grey' }}>/Person</span> </p>
-                                <button
-                                    onClick={() => handleBooking(2, 'couple')}
-                                    className="btn btn-secondary"
-                                    style={{ borderRadius: '25px' }}
-                                >
-                                    Book Now
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src={image3} alt="Card image cap" />
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <div class="card-text">
-                                <span><IoMdTime /> 2 days 3 nights</span>
-                                <span><FaRegUser /> 4-6 guest</span>
-                            </div>
-
-                            <div className="card_footer mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
-                                <p><b style={{fontSize: '20px'}}>Rs. 1000</b> <span style={{color: 'grey'}}>/Person</span> </p>
-                                <a href="#" class="btn btn-secondary" style={{borderRadius:'25px'}}>Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src={image1} alt="Card image cap" />
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <div class="card-text">
-                                <span><IoMdTime /> 2 days 3 nights</span>
-                                <span><FaRegUser /> 4-6 guest</span>
-                            </div>
-
-                            <div className="card_footer mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
-                                <p><b style={{fontSize: '20px'}}>Rs. 1000</b> <span style={{color: 'grey'}}>/Person</span> </p>
-                                <a href="#" class="btn btn-secondary" style={{borderRadius:'25px'}}>Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src={image2} alt="Card image cap" />
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <div class="card-text">
-                                <span><IoMdTime /> 2 days 3 nights</span>
-                                <span><FaRegUser /> 4-6 guest</span>
-                            </div>
-
-                            <div className="card_footer mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
-                                <p><b style={{fontSize: '20px'}}>Rs. 1000</b> <span style={{color: 'grey'}}>/Person</span> </p>
-                                <a href="#" class="btn btn-secondary" style={{borderRadius:'25px'}}>Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-4">
-                    <div class="card">
-                        <img class="card-img-top" src={image3} alt="Card image cap" />
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <div class="card-text">
-                                <span><IoMdTime /> 2 days 3 nights</span>
-                                <span><FaRegUser /> 4-6 guest</span>
-                            </div>
-
-                            <div className="card_footer mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
-                                <p><b style={{fontSize: '20px'}}>Rs. 1000</b> <span style={{color: 'grey'}}>/Person</span> </p>
-                                <a href="#" class="btn btn-secondary" style={{borderRadius:'25px'}}>Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {travelData.map((item) => (
+                    <Card
+                        key={item.id}
+                        id={item.id}
+                        image={item.image}
+                        title={item.title}
+                        travelType={item.travelType}
+                        price={item.price}
+                        guests={item.guests}
+                    />
+                ))}
 
             </div>
         </div>
-    </div>
+      </div>
     <Footer />
 
     </>

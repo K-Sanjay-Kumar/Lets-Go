@@ -1,9 +1,9 @@
-// Card.jsx
 import React from "react";
+import { FaRegUser } from "react-icons/fa";
 
-const Card = ({ id, image, title, travelType, price }) => {
+const Card = ({ id, image, title, travelType, price, guests }) => {
     const handleBooking = (id, travelType) => {
-        window.location.href = `/booking/${id}/${travelType}`; // Redirects to booking with id and travelType
+        window.location.href = `/booking/${id}/${title}/${travelType}/${price}`; // Redirects to booking with id, travelType, and price
     };
 
     return (
@@ -13,15 +13,27 @@ const Card = ({ id, image, title, travelType, price }) => {
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
                     <div className="card-text">
-                        <span>{travelType}</span>
-                        <span>Price: Rs. {price}</span>
+                        <span>
+                            <FaRegUser /> {guests} guests <span className="travel-type">({travelType})</span>
+                        </span>
                     </div>
-                    <button
-                        onClick={() => handleBooking(id, travelType)}
-                        className="btn btn-secondary"
+
+                    <div
+                        className="card_footer mt-4"
+                        style={{ display: "flex", justifyContent: "space-between" }}
                     >
-                        Book Now
-                    </button>
+                        <p>
+                            <b style={{ fontSize: "20px" }}>Rs. {price}</b>{" "}
+                            <span style={{ color: "grey" }}>/Person</span>{" "}
+                        </p>
+                        <button
+                            onClick={() => handleBooking(id, travelType)} // Pass travelType as a string
+                            className="btn btn-secondary"
+                            style={{ borderRadius: "25px" }}
+                        >
+                            Book Now
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

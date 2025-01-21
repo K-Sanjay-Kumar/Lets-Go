@@ -3,13 +3,24 @@ import { useParams, useSearchParams } from "react-router-dom";
 import Header from './header';
 import Footer from './footer';
 import './booking.css';
+import { use } from 'react';
 
 function Booking() {
-    const { id } = useParams();
-    const [searchParams] = useSearchParams();
+    const { id, travelType, price, destination } = useParams();
     const [members, setMembers] = useState(0); // State to handle number of members
 
-    
+    useEffect(() => {
+        if (travelType === 'Familly') {
+            setMembers(5);
+        } else if (travelType === 'Friends') {
+            setMembers(3);
+        } else if (travelType === 'Couple') {
+            setMembers(2);
+        } else {
+            setMembers(1);
+        }
+    }, []);    
+
     // Render member input fields
     const renderMemberInputs = () => {
         let inputs = [];
@@ -34,7 +45,7 @@ function Booking() {
                 <div className="container">
                     <div className="form">
                         <div className="form-title">
-                            <h3>Book Your Trip with ID: {id}</h3>
+                            <h3>✈️ Book Your Trip to: {destination} ✈️</h3>
                         </div>
                         <div className="form-content">
                             <form action="" method="post">

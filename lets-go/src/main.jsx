@@ -6,6 +6,7 @@ import './index.css'
 import App from './App.jsx'
 import Places from './components/places.jsx'
 import Mytrips from './components/mytrips.jsx'
+import Booking from './components/booking.jsx'
 
 const router=createBrowserRouter([
   {
@@ -19,12 +20,18 @@ const router=createBrowserRouter([
   {
     path: '/My-Trips',
     element: <Mytrips />
+  },
+  {
+    path: '/booking/:id/:destination/:travelType/:price',
+    element: <Booking />
   }
 ])
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    {/* <App /> */}
-    <RouterProvider router={router} />
-  </StrictMode>,
+  // <StrictMode>
+  //   <App />
+    
+  // </StrictMode>,
+
+  <RouterProvider router={router} />
 )
