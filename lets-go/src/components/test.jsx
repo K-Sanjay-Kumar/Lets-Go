@@ -59,13 +59,11 @@ function Places() {
   return (
     <>
       <Header />
-
       <div className="banner" style={{backgroundImage: `url(${backgrounds[currentBackground]})`,}}>
         <div className="banner-content">
           <div className="content-left">
-            <h1 style={{fontSize:'70px'}}>Explore Beautiful <br />Places</h1>
-            <h2>Tell us your travel preference🌴🏖️</h2>
-            <p>Just provide some basic details</p>
+            <h1>Explore Beautiful Places</h1>
+            <p>Discover amazing destinations around the world.</p>
           </div>
           <div className="content-right">
             {backgrounds.map((image, index) => (
@@ -78,20 +76,20 @@ function Places() {
             ))}
           </div>
         </div>
-      </div>
+        <div className="search-bar">
 
-      <div className="main-content p-5">
-        <div className="container">
+          <form>
+            <div className="form-group">
+                <b>Destination</b>
 
-          {/* <div className="content-title">
-            <h3>Tell us your travel preference🌴🏖️</h3>
-            <p>Just provide some basic details</p>
-          </div> */}
-          
-          <div className="content-details-form mt-5">
-            <div className="destination">
-              <h4>What is the destination 🗺️?</h4>
-              <input type="text" className="form-control mt-2" placeholder="Type a destination..." value={destination} onChange={handleDestinationChange} />
+                <input
+                  type="text"
+                  className="form-control mt-2"
+                  placeholder="Type a destination..."
+                  value={destination}
+                  onChange={handleDestinationChange}
+                />
+
                 <ul className="dropdown">
                   {locations.map((location, index) => (
                     <li
@@ -108,71 +106,60 @@ function Places() {
                 </ul>
             </div>
 
-            <div className="travel-days mt-5">
-              <h4>How many days are you planning your trip ⏲️?</h4>
-              <input type="number" className="form-control" placeholder="Ex.3"/>
+            <div className="form-group">
+                <b>No. of Days</b>
+                <input className="form-control mt-2" type="number" placeholder="Ex.3" required/>
             </div>
 
-            <div className="travel-budget-section mt-5">
-                <h4>What is your budget 🪙?</h4>
-                <div className="travel-budget">
-                  <div className="budget-card">
-                    <h3>💵</h3>
-                    <h4>Cheap</h4>
-                    <p>Stay conscious of costs</p>
-                  </div>
-                  
-                  <div className="budget-card">
-                    <h3>💰</h3>
-                    <h4>Moderate</h4>
-                    <p>Keep cost on the average side</p>
-                  </div>
-
-                  <div className="budget-card">
-                    <h3>💸</h3>
-                    <h4>Luxury</h4>
-                    <p>Don't worry about cost</p>
-                  </div>
-                </div>
+            <div className="form-group">
+                <b>Budget</b>
+                <select className="form-control mt-2">
+                    <option>--Select Budget--</option>
+                    <option>💵 Low</option>
+                    <option>💰 Medium</option>
+                    <option>💸 High</option>
+                </select>
             </div>
 
-            <div className="travel-type mt-5">
-              <h4>Who do you plan on traveling with on your next adventure🧍?</h4>
-              <div className="types">
-                <div className="type-card">
-                  <h3>🧍</h3>
-                  <h4>Just Me</h4>
-                  <p>Traveling solo</p>
-                </div>
-
-                <div className="type-card">
-                  <h3>👩‍❤️‍👨</h3>
-                  <h4>A Couple</h4>
-                  <p>Traveling with a partner</p>
-                </div>
-
-                <div className="type-card">
-                  <h3>👨‍👩‍👧‍👦</h3>
-                  <h4>Family</h4>
-                  <p>Traveling with family</p>
-                </div>
-
-                <div className="type-card">
-                  <h3>👬</h3>
-                  <h4>Friends</h4>
-                  <p>Traveling with friends</p>
-                </div>
-              </div>
+            <div className="form-group">
+                <b>Travelling Type</b>
+                <select className="form-control mt-2">
+                    <option>--Select Type--</option>
+                    <option>🧍Just Me</option>
+                    <option>👫 A Couple</option>
+                    <option>👨‍👩‍👧‍👦 Familly</option>
+                    <option>👬 Friends</option>
+                </select>
             </div>
-
-            <div className="generate-button text-center">
-              <button type="submit" className="btn btn-success mt-5" style={{fontSize: "16px"}}>Generate</button>
+            
+            <div className="form-group">
+                <br />
+                <button type="submit" className="form-control mt-2" style={{fontSize: "16px"}}><FaSearch /> Search</button>
             </div>
+          </form>
 
-          </div>
         </div>
       </div>
 
+      <div className="main" id="places">
+        <div className="places-cards container">
+            <div className="row" style={{rowGap: '20px'}}>
+
+                {travelData.map((item) => (
+                    <Card
+                        key={item.id}
+                        id={item.id}
+                        image={item.image}
+                        title={item.title}
+                        travelType={item.travelType}
+                        price={item.price}
+                        guests={item.guests}
+                    />
+                ))}
+
+            </div>
+        </div>
+      </div>
     <Footer />
 
     </>

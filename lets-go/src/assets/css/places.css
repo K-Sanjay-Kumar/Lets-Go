@@ -130,23 +130,144 @@
   gap: 10px;
 }
 
-
 .dropdown {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  background-color: white;
+  position: absolute;
+  background: white;
   border: 1px solid #ccc;
-  max-width: 300px; /* Adjust width as needed */
-  position: absolute; /* Ensure dropdown aligns with the input */
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  width: 50%;
   z-index: 1000;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for better visibility */
+  border-radius: 4px; /* Rounded corners for a modern look */
 }
 
 .dropdown-item {
   padding: 8px 12px;
   cursor: pointer;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 .dropdown-item:hover {
-  background-color: #f0f0f0;
+  background: #f0f0f0;
 }
+
+
+.travel-budget {
+  display: flex;
+  flex-wrap: wrap; /* Allow cards to wrap to the next row on smaller screens */
+  gap: 16px; /* Add spacing between cards */
+  justify-content: center; /* Center-align the cards */
+  margin: 20px 0; /* Add vertical spacing around the container */
+}
+
+.budget-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 16px;
+  width: calc(33.333% - 16px);
+  min-width: 200px;
+  flex: 1 1 300px;
+  transition: transform 0.3s ease;
+}
+
+.budget-card:hover {
+  transform: translateY(-5px);
+  cursor: pointer;
+}
+
+.budget-card h3 {
+  font-size: 2rem;
+  margin: 0 0 8px;
+}
+
+.budget-card h4 {
+  font-size: 1.25rem;
+  margin: 0 0 8px;
+}
+
+.budget-card p {
+  font-size: 0.9rem; /* Smaller text for descriptions */
+  color: #666; /* Subtle text color */
+}
+
+@media (max-width: 768px) {
+  .budget-card {
+    width: calc(50% - 16px); /* Two cards per row on medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .budget-card {
+    width: 100%; /* Single card per row on small screens */
+  }
+}
+
+
+.types {
+  display: flex;
+  flex-wrap: wrap; /* Enable wrapping for smaller screens */
+  gap: 16px; /* Spacing between cards */
+  justify-content: center; /* Center-align the cards */
+  margin: 20px 0; /* Add vertical spacing around the container */
+}
+
+.type-card {
+  background: #fff; /* White background for contrast */
+  border: 1px solid #ccc; /* Light border for structure */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-align: center; /* Center-align text */
+  padding: 16px; /* Inner padding */
+  width: calc(25% - 16px); /* Four cards per row with spacing */
+  min-width: 150px; /* Ensure a minimum width */
+  flex: 1 1 200px; /* Allow cards to shrink and grow */
+  transition: transform 0.3s ease; /* Add hover effect */
+}
+
+.type-card:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  cursor: pointer;
+}
+
+.type-card h3 {
+  font-size: 2rem; /* Icon size */
+  margin: 0 0 8px; /* Space below the icon */
+}
+
+.type-card h4 {
+  font-size: 1.25rem; /* Heading size */
+  margin: 0 0 8px; /* Space below the heading */
+}
+
+.type-card p {
+  font-size: 0.9rem; /* Description size */
+  color: #666; /* Subtle text color */
+}
+
+@media (max-width: 992px) {
+  .type-card {
+    width: calc(33.333% - 16px); /* Three cards per row on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .type-card {
+    width: calc(50% - 16px); /* Two cards per row on small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .type-card {
+    width: 100%; /* Single card per row on extra small screens */
+  }
+}
+
+
