@@ -24,22 +24,42 @@ function Places() {
   }, [backgrounds.length]);
 
   const travelData = [
-    { id: 1, image: image1, guests: '5 to 10', title: "Beach Vacation", travelType: "Family", price: 1000 },
-    { id: 2, image: image2, guests: '1', title: "Mountain Hiking", travelType: "Solo", price: 800 },
-    { id: 3, image: image3, guests: '2', title: "City Exploration", travelType: "Couple", price: 1200 },
-    { id: 4, image: image1, guests: '3 to 4', title: "Desert Safari", travelType: "Friends", price: 900 },
-    { id: 5, image: image2, guests: '5 to 10', title: "Cruise Getaway", travelType: "Family", price: 1500 },
-];
+      { id: 1, image: image1, guests: '5 to 10', title: "Beach Vacation", travelType: "Family", price: 1000 },
+      { id: 2, image: image2, guests: '1', title: "Mountain Hiking", travelType: "Solo", price: 800 },
+      { id: 3, image: image3, guests: '2', title: "City Exploration", travelType: "Couple", price: 1200 },
+      { id: 4, image: image1, guests: '3 to 4', title: "Desert Safari", travelType: "Friends", price: 900 },
+      { id: 5, image: image2, guests: '5 to 10', title: "Cruise Getaway", travelType: "Family", price: 1500 },
+  ];
+
+  const [destination, setDestination] = useState("");
+  const [locations, setLocations] = useState([]);
+
+  // Fetch locations from API
+  const fetchLocations = async (query) => {
+    if (query.length < 3) {
+      setLocations([]); // Reset if the query is too short
+      return;
+    }
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${query}&format=json&addressdetails=1&limit=5`);
+      const data = await response.json();
+      setLocations(data.map((loc) => loc.display_name));
+    } catch (error) {
+      console.error("Error fetching locations:", error);
+    }
+  };
+
+  // Handle destination input change
+  const handleDestinationChange = (event) => {
+    const value = event.target.value;
+    setDestination(value);
+    fetchLocations(value);
+  };
 
   return (
     <>
       <Header />
-      <div
-        className="banner"
-        style={{
-          backgroundImage: `url(${backgrounds[currentBackground]})`,
-        }}
-      >
+      <div className="banner" style={{backgroundImage: `url(${backgrounds[currentBackground]})`,}}>
         <div className="banner-content">
           <div className="content-left">
             <h1>Explore Beautiful Places</h1>
@@ -61,13 +81,29 @@ function Places() {
           <form>
             <div className="form-group">
                 <b>Destination</b>
-                <select className="form-control mt-2">
-                    <option>--Select Destination--</option>
-                    <option>New York, USA</option>
-                    <option>Paris, France</option>
-                    <option>Tokyo, Japan</option>
-                </select>
 
+                <input
+                  type="text"
+                  className="form-control mt-2"
+                  placeholder="Type a destination..."
+                  value={destination}
+                  onChange={handleDestinationChange}
+                />
+
+                <ul className="dropdown">
+                  {locations.map((location, index) => (
+                    <li
+                      key={index}
+                      className="dropdown-item"
+                      onClick={() => {
+                        setDestination(location); // Update destination state
+                        setLocations([]); // Clear the dropdown
+                      }}
+                    >
+                      {location}
+                    </li>
+                  ))}
+                </ul>
             </div>
 
             <div className="form-group">
@@ -79,9 +115,9 @@ function Places() {
                 <b>Budget</b>
                 <select className="form-control mt-2">
                     <option>--Select Budget--</option>
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
+                    <option>💵 Low</option>
+                    <option>💰 Medium</option>
+                    <option>💸 High</option>
                 </select>
             </div>
 
@@ -89,10 +125,10 @@ function Places() {
                 <b>Travelling Type</b>
                 <select className="form-control mt-2">
                     <option>--Select Type--</option>
-                    <option>Just Me</option>
-                    <option>A Couple</option>
-                    <option>Familly</option>
-                    <option>Friends</option>
+                    <option>🧍Just Me</option>
+                    <option>👫 A Couple</option>
+                    <option>👨‍👩‍👧‍👦 Familly</option>
+                    <option>👬 Friends</option>
                 </select>
             </div>
             

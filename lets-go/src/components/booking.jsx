@@ -3,7 +3,6 @@ import { useParams, useSearchParams } from "react-router-dom";
 import Header from './header';
 import Footer from './footer';
 import './booking.css';
-import { use } from 'react';
 
 function Booking() {
     const { id, travelType, price, destination } = useParams();
