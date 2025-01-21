@@ -83,11 +83,6 @@ function Places() {
       <div className="main-content p-5">
         <div className="container">
 
-          {/* <div className="content-title">
-            <h3>Tell us your travel preference🌴🏖️</h3>
-            <p>Just provide some basic details</p>
-          </div> */}
-          
           <div className="content-details-form mt-5">
             <div className="destination">
               <h4>What is the destination 🗺️?</h4>
@@ -166,7 +161,7 @@ function Places() {
             </div>
 
             <div className="generate-button text-center">
-              <button type="submit" className="btn btn-success mt-5" style={{fontSize: "16px"}}>Generate</button>
+              <button type="submit" className="btn btn-success mt-5" style={{fontSize: "20px"}}>Generate ✨</button>
             </div>
 
           </div>
