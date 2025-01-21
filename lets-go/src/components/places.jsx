@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Header from "./header";
-import "./places.css";
-import image1 from "../assets/677605.jpg";
-import image2 from "../assets/889209.png";
-import image3 from "../assets/thumb-1920-311151.jpg";
+import Footer from "./footer";
+import "../assets/css/places.css";
+import image1 from "../assets/images/bg-image-1.jpg";
+import image2 from "../assets/images/bg-image-2.png";
+import image3 from "../assets/images/bg-image-3.jpg";
 import { FaSearch } from "react-icons/fa";
+import { IoMdTime } from "react-icons/io";
+import { FaRegUser } from "react-icons/fa";
 
 function Places() {
   const [currentBackground, setCurrentBackground] = useState(0);
@@ -92,6 +95,112 @@ function Places() {
 
         </div>
       </div>
+
+      <div className="main" id="places">
+        <div className="places-cards container">
+            <div className="row" style={{rowGap: '20px'}}>
+
+                <div className="col-md-4">
+                    <div className="card">
+                        <img className="card-img-top" src={image1} alt="Card image cap" />
+                        <div className="card-body">
+                            <h5 className="card-title">Maldives</h5>
+                            <div className="card-text">
+                                <span><IoMdTime /> 2 days 3 nights</span>
+                                <span><FaRegUser /> 2 guests <span className="travel-type">(couple)</span></span>
+                            </div>
+
+                            <div className="card_footer mt-4" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <p><b style={{ fontSize: '20px' }}>Rs. 19,000</b> <span style={{ color: 'grey' }}>/Person</span> </p>
+                                <button
+                                    onClick={() => handleBooking(2, 'couple')}
+                                    className="btn btn-secondary"
+                                    style={{ borderRadius: '25px' }}
+                                >
+                                    Book Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src={image3} alt="Card image cap" />
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <div class="card-text">
+                                <span><IoMdTime /> 2 days 3 nights</span>
+                                <span><FaRegUser /> 4-6 guest</span>
+                            </div>
+
+                            <div className="card_footer mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
+                                <p><b style={{fontSize: '20px'}}>Rs. 1000</b> <span style={{color: 'grey'}}>/Person</span> </p>
+                                <a href="#" class="btn btn-secondary" style={{borderRadius:'25px'}}>Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src={image1} alt="Card image cap" />
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <div class="card-text">
+                                <span><IoMdTime /> 2 days 3 nights</span>
+                                <span><FaRegUser /> 4-6 guest</span>
+                            </div>
+
+                            <div className="card_footer mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
+                                <p><b style={{fontSize: '20px'}}>Rs. 1000</b> <span style={{color: 'grey'}}>/Person</span> </p>
+                                <a href="#" class="btn btn-secondary" style={{borderRadius:'25px'}}>Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src={image2} alt="Card image cap" />
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <div class="card-text">
+                                <span><IoMdTime /> 2 days 3 nights</span>
+                                <span><FaRegUser /> 4-6 guest</span>
+                            </div>
+
+                            <div className="card_footer mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
+                                <p><b style={{fontSize: '20px'}}>Rs. 1000</b> <span style={{color: 'grey'}}>/Person</span> </p>
+                                <a href="#" class="btn btn-secondary" style={{borderRadius:'25px'}}>Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src={image3} alt="Card image cap" />
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <div class="card-text">
+                                <span><IoMdTime /> 2 days 3 nights</span>
+                                <span><FaRegUser /> 4-6 guest</span>
+                            </div>
+
+                            <div className="card_footer mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
+                                <p><b style={{fontSize: '20px'}}>Rs. 1000</b> <span style={{color: 'grey'}}>/Person</span> </p>
+                                <a href="#" class="btn btn-secondary" style={{borderRadius:'25px'}}>Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <Footer />
+
     </>
   );
 }

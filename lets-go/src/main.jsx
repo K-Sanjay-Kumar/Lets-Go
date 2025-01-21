@@ -5,7 +5,7 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import Places from './components/places.jsx'
-import Header from './components/header.jsx'
+import Mytrips from './components/mytrips.jsx'
 
 const router=createBrowserRouter([
   {
@@ -15,6 +15,10 @@ const router=createBrowserRouter([
   {
     path: '/places',
     element: <Places />
+  },
+  {
+    path: '/My-Trips',
+    element: <Mytrips />
   }
 ])
 

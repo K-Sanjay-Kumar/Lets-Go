@@ -86,28 +86,46 @@
 }
 
 
-.search-bar form{
-  border: 1px solid #c7c7c7;
-  padding: 16px;
-  border-radius: 15px;
+#places {
+  margin-top: 150px;
 }
 
 
+.search-bar form {
+  border: 1px solid #c7c7c7;
+  padding: 16px;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
 
-/* Add responsive styles for smaller screens */
 @media (max-width: 768px) {
   .search-bar {
-    width: 95%; /* Reduce the width for smaller screens */
-    bottom: -450px; /* Adjust positioning */
+    width: 95%;
+    bottom: -250px;
   }
 
   .search-bar form {
-    flex-direction: column; /* Stack form elements vertically */
-    align-items: stretch; /* Stretch items to full width */
-    gap: 15px; /* Increase the gap between form elements */
+    grid-template-columns: repeat(2, 1fr); /* Two columns per row */
+    gap: 15px;
   }
 
   .search-bar .form-group {
-    min-width: 100%; /* Ensure form groups take full width */
+    min-width: unset; /* Remove min-width so items adjust naturally */
   }
+
+  #places {
+    margin-top: 300px;
+  }
+}
+
+.places-cards .card .card-img-top{
+  max-height: 199px;
+}
+
+.card-text{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
