@@ -7,6 +7,7 @@ import App from './App.jsx'
 import Places from './components/places.jsx'
 import Mytrips from './components/mytrips.jsx'
 import Booking from './components/booking.jsx'
+import ContactUs from './components/contact-us.jsx'
 
 const router=createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router=createBrowserRouter([
   {
     path: '/booking/:id/:destination/:travelType/:price',
     element: <Booking />
+  },
+  {
+    path: '/Contact-Us',
+    element: <ContactUs />
   }
 ])
 
