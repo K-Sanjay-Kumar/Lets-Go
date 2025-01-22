@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Header from "./header";
 import Footer from "./footer";
 import "../assets/css/places.css";
-import Card from "../constants/Card";
 import image1 from "../assets/images/bg-image-1.jpg";
 import image2 from "../assets/images/bg-image-2.png";
 import image3 from "../assets/images/bg-image-3.jpg";
-import { FaSearch } from "react-icons/fa";
-import { IoMdTime } from "react-icons/io";
 
 
 function Places() {
@@ -56,6 +55,25 @@ function Places() {
     fetchLocations(value);
   };
 
+  const [formData, setFormData] = useState([]);
+  const handleInputChange = (key, value) => {
+    setFormData({ ...formData, [key]: value });
+  };
+
+  const OnGenerateTrip = () =>{
+    if(!formData?.budget||!formData?.destination||!formData?.noOfDays||!formData?.traveler){
+      // alert("Please fill all the fields to generate your trip");
+      toast.error("Please fill all the fields to generate your trip");
+      return;
+    }
+    else if(formData?.noOfDays>5){
+      // alert('You can only generate your trip for 5 days or less');
+      toast.error("You can only generate your trip for 5 days or less");
+      return;
+    }
+    console.log(formData);
+  }
+
   return (
     <>
       <Header />
@@ -86,15 +104,16 @@ function Places() {
           <div className="content-details-form mt-5">
             <div className="destination">
               <h4>What is the destination 🗺️?</h4>
-              <input type="text" className="form-control mt-2" placeholder="Type a destination..." value={destination} onChange={handleDestinationChange} />
+              <input type="text" className="form-control mt-2" placeholder="Type a destination..." value={destination} onChange={handleDestinationChange}/>
                 <ul className="dropdown">
                   {locations.map((location, index) => (
                     <li
                       key={index}
                       className="dropdown-item"
                       onClick={() => {
-                        setDestination(location); // Update destination state
-                        setLocations([]); // Clear the dropdown
+                        setDestination(location);
+                        setLocations([]);
+                        handleInputChange('destination', location);
                       }}
                     >
                       {location}
@@ -105,25 +124,25 @@ function Places() {
 
             <div className="travel-days mt-5">
               <h4>How many days are you planning your trip ⏲️?</h4>
-              <input type="number" className="form-control" placeholder="Ex.3"/>
+              <input type="number" className="form-control" placeholder="Ex.3" onChange={(e) => handleInputChange('noOfDays', e.target.value)}/>
             </div>
 
             <div className="travel-budget-section mt-5">
                 <h4>What is your budget 🪙?</h4>
                 <div className="travel-budget">
-                  <div className="budget-card">
+                  <div className={`budget-card ${formData?.budget=='Cheap'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Cheap')}>
                     <h3>💵</h3>
                     <h4>Cheap</h4>
                     <p>Stay conscious of costs</p>
                   </div>
                   
-                  <div className="budget-card">
+                  <div className={`budget-card ${formData?.budget=='Moderate'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Moderate')}>
                     <h3>💰</h3>
                     <h4>Moderate</h4>
                     <p>Keep cost on the average side</p>
                   </div>
 
-                  <div className="budget-card">
+                  <div className={`budget-card ${formData?.budget=='Luxury'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Luxury')}>
                     <h3>💸</h3>
                     <h4>Luxury</h4>
                     <p>Don't worry about cost</p>
@@ -134,25 +153,25 @@ function Places() {
             <div className="travel-type mt-5">
               <h4>Who do you plan on traveling with on your next adventure🧍?</h4>
               <div className="types">
-                <div className="type-card">
+                <div className={`type-card ${formData?.traveler=='1 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '1 People')}>
                   <h3>🧍</h3>
                   <h4>Just Me</h4>
                   <p>Traveling solo</p>
                 </div>
 
-                <div className="type-card">
+                <div className={`type-card ${formData?.traveler=='2 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '2 People')}>
                   <h3>👩‍❤️‍👨</h3>
                   <h4>A Couple</h4>
                   <p>Traveling with a partner</p>
                 </div>
 
-                <div className="type-card">
+                <div className={`type-card ${formData?.traveler=='3 to 5 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '3 to 5 People')}>
                   <h3>👨‍👩‍👧‍👦</h3>
                   <h4>Family</h4>
                   <p>Traveling with family</p>
                 </div>
 
-                <div className="type-card">
+                <div className={`type-card ${formData?.traveler=='5 to 10 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '5 to 10 People')}>
                   <h3>👬</h3>
                   <h4>Friends</h4>
                   <p>Traveling with friends</p>
@@ -161,8 +180,10 @@ function Places() {
             </div>
 
             <div className="generate-button text-center">
-              <button type="submit" className="btn btn-success mt-5" style={{fontSize: "20px"}}>Generate ✨</button>
+              <button type="submit" className="btn btn-success mt-5" style={{fontSize: "20px"}} onClick={OnGenerateTrip}>Generate ✨</button>
             </div>
+
+            <ToastContainer />
 
           </div>
         </div>

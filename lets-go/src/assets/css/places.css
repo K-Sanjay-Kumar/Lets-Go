@@ -107,12 +107,12 @@
   }
 
   .search-bar form {
-    grid-template-columns: repeat(2, 1fr); /* Two columns per row */
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
   }
 
   .search-bar .form-group {
-    min-width: unset; /* Remove min-width so items adjust naturally */
+    min-width: unset;
   }
 
   #places {
@@ -133,23 +133,22 @@
 .dropdown {
   position: absolute;
   background: white;
-  border: 1px solid #ccc;
   max-height: 150px;
   overflow-y: auto;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
   width: 50%;
   z-index: 1000;
   padding: 0;
   margin: 0;
   list-style: none;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for better visibility */
-  border-radius: 4px; /* Rounded corners for a modern look */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
 }
 
 .dropdown-item {
   padding: 8px 12px;
   cursor: pointer;
-  white-space: nowrap; /* Prevent text wrapping */
+  white-space: nowrap;
 }
 
 .dropdown-item:hover {
@@ -159,10 +158,10 @@
 
 .travel-budget {
   display: flex;
-  flex-wrap: wrap; /* Allow cards to wrap to the next row on smaller screens */
-  gap: 16px; /* Add spacing between cards */
-  justify-content: center; /* Center-align the cards */
-  margin: 20px 0; /* Add vertical spacing around the container */
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin: 20px 0;
 }
 
 .budget-card {
@@ -194,79 +193,79 @@
 }
 
 .budget-card p {
-  font-size: 0.9rem; /* Smaller text for descriptions */
-  color: #666; /* Subtle text color */
+  font-size: 0.9rem;
+  color: #666;
 }
 
 @media (max-width: 768px) {
   .budget-card {
-    width: calc(50% - 16px); /* Two cards per row on medium screens */
+    width: calc(50% - 16px);
   }
 }
 
 @media (max-width: 480px) {
   .budget-card {
-    width: 100%; /* Single card per row on small screens */
+    width: 100%;
   }
 }
 
 
 .types {
   display: flex;
-  flex-wrap: wrap; /* Enable wrapping for smaller screens */
-  gap: 16px; /* Spacing between cards */
-  justify-content: center; /* Center-align the cards */
-  margin: 20px 0; /* Add vertical spacing around the container */
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin: 20px 0;
 }
 
 .type-card {
-  background: #fff; /* White background for contrast */
-  border: 1px solid #ccc; /* Light border for structure */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  text-align: center; /* Center-align text */
-  padding: 16px; /* Inner padding */
-  width: calc(25% - 16px); /* Four cards per row with spacing */
-  min-width: 150px; /* Ensure a minimum width */
-  flex: 1 1 200px; /* Allow cards to shrink and grow */
-  transition: transform 0.3s ease; /* Add hover effect */
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 16px;
+  width: calc(25% - 16px);
+  min-width: 150px;
+  flex: 1 1 200px;
+  transition: transform 0.3s ease;
 }
 
 .type-card:hover {
-  transform: translateY(-5px); /* Slight lift on hover */
+  transform: translateY(-5px);
   cursor: pointer;
 }
 
 .type-card h3 {
-  font-size: 2rem; /* Icon size */
-  margin: 0 0 8px; /* Space below the icon */
+  font-size: 2rem;
+  margin: 0 0 8px;
 }
 
 .type-card h4 {
-  font-size: 1.25rem; /* Heading size */
-  margin: 0 0 8px; /* Space below the heading */
+  font-size: 1.25rem;
+  margin: 0 0 8px;
 }
 
 .type-card p {
-  font-size: 0.9rem; /* Description size */
-  color: #666; /* Subtle text color */
+  font-size: 0.9rem;
+  color: #666;
 }
 
 @media (max-width: 992px) {
   .type-card {
-    width: calc(33.333% - 16px); /* Three cards per row on medium screens */
+    width: calc(33.333% - 16px);
   }
 }
 
 @media (max-width: 768px) {
   .type-card {
-    width: calc(50% - 16px); /* Two cards per row on small screens */
+    width: calc(50% - 16px);
   }
 }
 
 @media (max-width: 480px) {
   .type-card {
-    width: 100%; /* Single card per row on extra small screens */
+    width: 100%;
   }
 }
 
