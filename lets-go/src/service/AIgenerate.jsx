@@ -1,14 +1,9 @@
-// const {
-//     GoogleGenerativeAI,
-//     HarmCategory,
-//     HarmBlockThreshold,
-//   } = require("@google/generative-ai");
 
 import {GoogleGenerativeAI} from "@google/generative-ai";
+import config from "../constants/config";
   
-  const apiKey = 'AIzaSyBNPzQKurxUoQ6wk7nk6VxMq7fHqn-p-9Q';
-  // const apiKey = process.env.GEMINI_API_KEY;
-  const genAI = new GoogleGenerativeAI(apiKey);
+  // const apiKey = 'AIzaSyBNPzQKurxUoQ6wk7nk6VxMq7fHqn-p-9Q';
+  const genAI = new GoogleGenerativeAI(config.googleGenerativeAIKey);
   
   const model = genAI.getGenerativeModel({
     model: "gemini-2.0-flash-exp",
