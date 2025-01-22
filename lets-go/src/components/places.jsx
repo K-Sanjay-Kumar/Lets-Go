@@ -7,6 +7,7 @@ import "../assets/css/places.css";
 import image1 from "../assets/images/bg-image-1.jpg";
 import image2 from "../assets/images/bg-image-2.png";
 import image3 from "../assets/images/bg-image-3.jpg";
+import { chatSession } from "../service/AIgenerate";
 
 
 function Places() {
@@ -60,7 +61,7 @@ function Places() {
     setFormData({ ...formData, [key]: value });
   };
 
-  const OnGenerateTrip = () =>{
+  const OnGenerateTrip = async() =>{
     if(!formData?.budget||!formData?.destination||!formData?.noOfDays||!formData?.traveler){
       toast.error("Please fill all the fields to generate your trip");
       return;
@@ -69,10 +70,13 @@ function Places() {
       toast.error("You can only generate your trip for 5 days or less");
       return;
     }
-    // console.log(formData);
 
     const PROMPT='Generate Travel Plan for Location: '+formData?.destination+', for '+formData?.noOfDays+' Days for '+formData?.traveler+' with a '+formData?.budget+' Budget, give me Hotels options list Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, rating, Time travel each of the location for'+formData?.noOfDays+' days with each day plan with best time to visit in JSON format.';
     console.log(PROMPT);
+
+    const result = await chatSession.sendMessage(PROMPT);
+    console.log("Result:", result?.response?.text());
+
   }
 
   return (
