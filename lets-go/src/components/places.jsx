@@ -62,16 +62,17 @@ function Places() {
 
   const OnGenerateTrip = () =>{
     if(!formData?.budget||!formData?.destination||!formData?.noOfDays||!formData?.traveler){
-      // alert("Please fill all the fields to generate your trip");
       toast.error("Please fill all the fields to generate your trip");
       return;
     }
     else if(formData?.noOfDays>5){
-      // alert('You can only generate your trip for 5 days or less');
       toast.error("You can only generate your trip for 5 days or less");
       return;
     }
-    console.log(formData);
+    // console.log(formData);
+
+    const PROMPT='Generate Travel Plan for Location: '+formData?.destination+', for '+formData?.noOfDays+' Days for '+formData?.traveler+' with a '+formData?.budget+' Budget, give me Hotels options list Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, rating, Time travel each of the location for'+formData?.noOfDays+' days with each day plan with best time to visit in JSON format.';
+    console.log(PROMPT);
   }
 
   return (
