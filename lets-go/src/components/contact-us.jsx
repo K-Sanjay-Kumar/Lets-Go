@@ -1,12 +1,9 @@
 import React from 'react';
-import Header from '../constants/header';
-import Footer from '../constants/footer';
 import contact from '../assets/images/contact-us.jpg'
 
 const ContactUs = () => {
   return (
     <>
-      <Header />
       <div className='container'>
         <div className='contact-title text-center'x>
           <h1>Contact Us</h1>
@@ -37,7 +34,6 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

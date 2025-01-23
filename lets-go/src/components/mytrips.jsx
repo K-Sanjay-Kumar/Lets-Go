@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from '../constants/header';
-import Footer from '../constants/footer';
 import mytrips from '../assets/images/mytrips.jpg'
 import trip1 from '../assets/images/bg-image-1.jpg'
 import { IoMdTime } from "react-icons/io";
@@ -10,7 +8,6 @@ function Mytrips() {
 
     return (
         <>
-            <Header />
             <div className="banner" style={{ backgroundImage: `url(${mytrips})` }}>
                 <div className="banner-content">
                     <div className="content-left">
@@ -83,9 +80,6 @@ function Mytrips() {
                     </div>
                 </div>
             </div>
-
-
-            <Footer />
         </>
     )
 }

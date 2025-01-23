@@ -2,13 +2,21 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import Header from "../constants/header";
-import Footer from "../constants/footer";
 import "../assets/css/places.css";
 import image1 from "../assets/images/bg-image-1.jpg";
 import image2 from "../assets/images/bg-image-2.png";
 import image3 from "../assets/images/bg-image-3.jpg";
 import { FormDataContext } from "./FormDataContext";
+import { FcGoogle } from "react-icons/fc";
+
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
+
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
 function Places() {
   const [currentBackground, setCurrentBackground] = useState(0);
@@ -31,6 +39,7 @@ function Places() {
       { id: 5, image: image2, guests: '5 to 10', title: "Cruise Getaway", travelType: "Family", price: 1500 },
   ];
 
+  const [openDialogue, setOpenDialogue] = useState(false);
   const [destination, setDestination] = useState("");
   const [locations, setLocations] = useState([]);
 
@@ -65,7 +74,24 @@ function Places() {
     setLocalFormData({ ...localFormData, [key]: value });
   };
 
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log(tokenResponse);
+      console.log("access tokken", tokenResponse.access_token)
+      GetUserProfile(tokenResponse)
+    },
+    onError:(error)=>console.log(error)
+  });
+
   const OnGenerateTrip = () => {
+
+    const user=localStorage.getItem('user');
+
+    if(!user){
+      setOpenDialogue(true);
+      return;
+    }
+
     if (!localFormData?.budget || !localFormData?.destination || !localFormData?.noOfDays || !localFormData?.traveler) {
       toast.error("Please fill all the fields to generate your trip");
       return;
@@ -81,10 +107,22 @@ function Places() {
     navigate("/travel_plan"); // Redirect to TravelPlan page
   };
 
+  const GetUserProfile=(tokenResponse)=>{
+    axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenResponse?.access_token}`, {
+      headers:{
+        Authorization: `Bearer ${tokenResponse?.access_token}`,
+        Accept: 'Application/json'
+      }
+    }).then((response)=>{
+      console.log("Response: ",response);
+      localStorage.setItem('user',JSON.stringify(response.data));
+      setOpenDialogue(false);
+      OnGenerateTrip();
+    })
+  }
+
   return (
     <>
-      <Header />
-
       <div className="banner" style={{backgroundImage: `url(${backgrounds[currentBackground]})`,}}>
         <div className="banner-content">
           <div className="content-left">
@@ -190,13 +228,27 @@ function Places() {
               <button type="submit" className="btn btn-success mt-5" style={{fontSize: "20px"}} onClick={OnGenerateTrip}>Generate ✨</button>
             </div>
 
+            <Dialog open={openDialogue} onClose={() => setOpenDialogue(false)}>
+              <DialogTitle>Please Login</DialogTitle>
+              <DialogContent>
+                {/* You need to login to generate a trip. */}
+                <h3 className="font-bold text-lg">Sign In with Google</h3>
+                <p>Sign In to the App with Google authentication securely</p>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => setOpenDialogue(false)}>Close</Button>
+                {/* Add a button to redirect to the login page */}
+                
+                <Button className="login-button"  onClick={login}   ><FcGoogle className="login-google-icon"/> &nbsp; Login</Button> 
+              
+              </DialogActions>
+            </Dialog>
+
             <ToastContainer />
 
           </div>
         </div>
       </div>
-
-    <Footer />
 
     </>
   );

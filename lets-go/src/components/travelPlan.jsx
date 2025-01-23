@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { FormDataContext } from "./FormDataContext";
 import { chatSession } from "../service/AIgenerate";
 import hotelimg from "../assets/images/Hotel.jpg";
-import Header from "../constants/header";
-import Footer from "../constants/footer";
 import { FaStar } from "react-icons/fa";
 import gif from '../assets/images/loading.gif';
 import "../assets/css/TravelPlan.css";
@@ -93,7 +91,6 @@ function TravelPlan() {
 
     return (
         <>
-            <Header />
 
             {loader ?(
                 <div className="loading">
@@ -164,7 +161,6 @@ function TravelPlan() {
 
             )}
 
-            <Footer />
         </>
     );
 }

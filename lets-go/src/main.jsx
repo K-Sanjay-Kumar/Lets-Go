@@ -2,8 +2,12 @@ import React from 'react'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import {RouterProvider, createBrowserRouter} from 'react-router-dom'
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import config from './constants/config.jsx';
 import './index.css'
 import App from './App.jsx'
+import Header from './constants/header.jsx'
+import Footer from './constants/footer.jsx'
 import Places from './components/places.jsx'
 import Mytrips from './components/mytrips.jsx'
 import Booking from './components/booking.jsx'
@@ -45,6 +49,10 @@ createRoot(document.getElementById('root')).render(
   // </StrictMode>,
 
   <FormDataProvider>
-    <RouterProvider router={router} />
+    <GoogleOAuthProvider clientId={config.google_Auth_Client_Id}>
+      <Header />
+        <RouterProvider router={router} />
+      <Footer />
+    </GoogleOAuthProvider>
   </FormDataProvider>
 )

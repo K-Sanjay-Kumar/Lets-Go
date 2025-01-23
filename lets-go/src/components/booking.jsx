@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from "react-router-dom";
-import Header from '../constants/header';
-import Footer from '../constants/footer';
 import './booking.css';
 
 function Booking() {
@@ -39,7 +37,6 @@ function Booking() {
 
     return (
         <>
-            <Header />
             <div className="booking-form">
                 <div className="container">
                     <div className="form">
@@ -71,7 +68,6 @@ function Booking() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     );
 }
