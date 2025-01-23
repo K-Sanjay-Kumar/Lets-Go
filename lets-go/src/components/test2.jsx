@@ -1,271 +1,159 @@
-
 import React, { useContext, useEffect, useState } from "react";
 import { FormDataContext } from "./FormDataContext";
 import { chatSession } from "../service/AIgenerate";
+import hotelimg from "../assets/images/Hotel.jpg";
 import Header from "../constants/header";
 import Footer from "../constants/footer";
-
-function TravelPlan() {
-  const { formData } = useContext(FormDataContext);
-  const [loading, setLoading] = useState(true); // State for loading
-  const [responseData, setResponseData] = useState(null); // State for response data
-
-  useEffect(() => {
-    const generateTravelPlan = async () => {
-      if (formData) {
-        // setLoading(true); // Start loading
-        const PROMPT = `Generate Travel Plan for Location: ${formData.destination}, for ${formData.noOfDays} Days for ${formData.traveler} with a ${formData.budget} Budget, give me Hotels options list Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, rating, Time travel each of the location for ${formData.noOfDays} days with each day plan with best time to visit in JSON format.`;
-        console.log(PROMPT);
-
-        try {
-        //   const result = await chatSession.sendMessage(PROMPT);
-          const response = await result.response.text(); // Ensure the response is parsed correctly
-          setResponseData(JSON.parse(response)); // Parse and store the JSON response
-        } catch (error) {
-          console.error("Error generating travel plan:", error);
-        } finally {
-        //   setLoading(false); // Stop loading after the request completes
-        }
-      }
-    };
-
-    generateTravelPlan();
-  }, [formData]);
-
-  if (loading) {
-    return <h1>Loading travel plan...</h1>; // Display loading indicator
-  }
-
-  if (!responseData) {
-    return <h1>Failed to load travel plan. Please try again later.</h1>; // Handle errors
-  }
-
-  return (
-    <>
-        <Header />
-
-        <Footer />
-    </>
-  );
-}
-
-export default TravelPlan;
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useContext, useEffect, useState } from "react";
-// import { FormDataContext } from "./FormDataContext";
-// import { chatSession } from "../service/AIgenerate";
-// import '../assets/css/TravelPlan.css'
-
-// function TravelPlan() {
-//   const { formData } = useContext(FormDataContext);
-//   const [loading, setLoading] = useState(true);
-//   const [tripData, setTripData] = useState(null);
-
-//   useEffect(() => {
-//     const generateTravelPlan = async () => {
-//       if (formData) {
-//         const PROMPT = `Generate Travel Plan for Location: ${formData.destination}, for ${formData.noOfDays} Days for ${formData.traveler} with a ${formData.budget} Budget, give me Hotels options list Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, rating, Time travel each of the location for ${formData.noOfDays} days with each day plan with best time to visit in JSON format.`;
-//         console.log(PROMPT);
-//         const result = await chatSession.sendMessage(PROMPT);
-//         const response = await result.response.text();
-//         console.log("Response:", response);
-//         setTripData(JSON.parse(response));
-//         setLoading(false);
-//       }
-//     };
-//     generateTravelPlan();
-//   }, [formData]);
-
-//   if (loading) {
-//     return <div className="loading">Loading your travel plan...</div>;
-//   }
-
-//   return (
-//     <div className="travel-plan">
-//       <h1>Your Travel Plan for {formData.destination}</h1>
-//       {Object.keys(tripData[0]?.itinerary || {}).map((day, index) => (
-//         <div key={day} className={`day-plan ${index % 2 === 0 ? "left" : "right"}`}>
-//           <h2>{day.toUpperCase()}</h2>
-//           <p className="best-time">Best Time to Visit: {tripData[0].itinerary[day].best_time_to_visit}</p>
-//           <div className="places">
-//             {tripData[0].itinerary[day].places.map((place, idx) => (
-//               <div key={idx} className="place-card">
-//                 <h3>{place.placeName}</h3>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }
-
-// export default TravelPlan;
-
-
-import React, { useContext, useEffect, useState } from "react";
-import { FormDataContext } from "./FormDataContext";
-import { chatSession } from "../service/AIgenerate";
+import { FaStar } from "react-icons/fa";
 import "../assets/css/TravelPlan.css";
 
 function TravelPlan() {
-  const { formData } = useContext(FormDataContext);
-  const [loading, setLoading] = useState(true);
-  const [tripData, setTripData] = useState(null);
-
-  async function fetchImageFromUnsplash(query) {
-    const accessKey = "YOUR_UNSPLASH_ACCESS_KEY";
-    const response = await fetch(
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&client_id=${accessKey}&per_page=1`
-    );
-    const data = await response.json();
-    // Return the first image URL or a placeholder if no image is found
-    return data.results.length > 0 ? data.results[0].urls.small : "Image Not Available";
-  }
-  
-
-//   useEffect(() => {
-//     const generateTravelPlan = async () => {
-//       if (formData) {
-//         const PROMPT = `Generate Travel Plan for Location: ${formData.destination}, for ${formData.noOfDays} Days for ${formData.traveler} with a ${formData.budget} Budget, give me Hotels options list Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, rating, Time travel each of the location for ${formData.noOfDays} days with each day plan with best time to visit in JSON format. And use actual image URLs for each entry. If the correct image URL isn't known, mark it as "Image Not Available."`;
-//         console.log(PROMPT);
-//         const result = await chatSession.sendMessage(PROMPT);
-//         const response = await result.response.text();
-//         console.log("Response:", response);
-//         setTripData(JSON.parse(response));
-//         setLoading(false);
-//       }
-//     };
-//     generateTravelPlan();
-//   }, [formData]);
-
-useEffect(() => {
-    const generateTravelPlan = async () => {
-      if (formData) {
-        const PROMPT = `Generate Travel Plan for Location: ${formData.destination}, for ${formData.noOfDays} Days for ${formData.traveler} with a ${formData.budget} Budget, give me Hotels options list Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, rating, Time travel each of the location for ${formData.noOfDays} days with each day plan with best time to visit in JSON format. And use actual image URLs for each entry. If the correct image URL isn't known, mark it as "Image Not Available."`;
-        console.log(PROMPT);
-        const result = await chatSession.sendMessage(PROMPT);
-        const response = await result.response.text();
-        console.log("Response:", response);
-        setTripData(JSON.parse(response));
-
-        console.log("Trip Data1:", tripData);
-  
-        // // Fetch Unsplash images for hotels
-        // for (const hotel of tripData.hotels) {
-        //   const imageUrl = await fetchImageFromUnsplash(hotel.HotelName);
-        //   hotel["hotel image url"] = imageUrl;
-        // }
-  
-        // // Fetch Unsplash images for itinerary places
-        // for (const day of tripData.itinerary.days) {
-        //   for (const place of day.places) {
-        //     const imageUrl = await fetchImageFromUnsplash(place.placeName);
-        //     place["Place Image Url"] = imageUrl;
-        //   }
-        // }
-
-    const hotelsArray = Array.isArray(tripData.hotels) ? tripData.hotels : (typeof tripData.hotels === 'object' ? Object.values(tripData.hotels) : []);
+    const { formData } = useContext(FormDataContext);
+    const [hotels, setHotels] = useState([]);
+    const [itinerary, setItinerary] = useState([]);
+    let parsedResponse = null;
 
 
-      for (const hotel of hotelsArray) {
-        const imageUrl = await fetchImageFromUnsplash(hotel.HotelName);
-        hotel["hotel image url"] = imageUrl;
-      }
+    useEffect(() => {
+        const generateTravelPlan = async () => {
+            if (formData) {
+                // const PROMPT = `Generate Travel Plan for Location: ${formData.destination}, for ${formData.noOfDays} Days for ${formData.traveler} with a ${formData.budget} Budget, give me a {Hotels} options list with {HotelName}, {HotelAddress}, {HotelPrice}, {hotelImageUrl}, {HotelRating}, {descriptions} and suggest itinerary with {placeName}, {PlaceDetails}, {PlaceImageUrl}, {ticketPricing}, {PlaceRating}, {TravelTime} each of the location for ${formData.noOfDays} days with each day plan with {BestTimeToVisit} in JSON format.`;
+                // const PROMPT = `Generate Travel Plan for Location: Goa, India, for 1 Days for 5 to 10 People with a Cheap Budget, give me {Hotels} options list with {HotelName}, {HotelAddress}, {HotelPrice}, {hotelImageUrl}, {HotelRating}, {descriptions} and suggest itinerary with {placeName}, {PlaceDetails}, {PlaceImageUrl}, {ticketPricing}, {PlaceRating}, {TravelTime} each of the location for 1 days with each day plan with best time to visit in JSON format.`;
+                const PROMPT = `Generate a travel plan for:
+                - Location: ${formData.destination}
+                - Duration: ${formData.noOfDays} days
+                - Travelers: ${formData.traveler}
+                - Budget: ${formData.budget}
 
-      // Fetch Unsplash images for itinerary places
-    //   for (const day of tripData.itinerary.days) {
-    //     for (const place of day.places) {
-    //       const imageUrl = await fetchImageFromUnsplash(place.placeName);
-    //       place["Place Image Url"] = imageUrl;
-    //     }
-    //   }
+                Return the response in JSON format like this:
 
-      for (const day of tripData.itinerary?.days || []) {
-        for (const place of day.places || []) {
-          if (place && place.placeName) {
-            try {
-              const imageUrl = await fetchImageFromUnsplash(place.placeName);
-              place["Place Image Url"] = imageUrl;
-            } catch (error) {
-              console.error(`Failed to fetch image for place: ${place.placeName}`, error);
-              place["Place Image Url"] = "Image Not Available"; // Fallback in case of error
+                {
+                "Hotels": [
+                    {
+                    "HotelName": "string",
+                    "HotelAddress": "string",
+                    "HotelPrice": "number",
+                    "HotelImageUrl": "string",
+                    "HotelRating": "number",
+                    "Descriptions": "string"
+                    }
+                ],
+                "Itinerary": [
+                    {
+                    "Day": "number",
+                    "PlaceName": "string",
+                    "PlaceDetails": "string",
+                    "PlaceImageUrl": "string",
+                    "TicketPricing": "number",
+                    "PlaceRating": "number",
+                    "TravelTime": "string",
+                    "BestTimeToVisit": "string"
+                    }
+                ]
+                }
+
+                Make sure to include both "Hotels" and "Itinerary" keys in the response.
+`
+                console.log(PROMPT);
+
+                try {
+                    const result = await chatSession.sendMessage(PROMPT);
+                    const textResponse = await result.response.text();
+
+                    // Parse the response into JSON
+                    parsedResponse = JSON.parse(textResponse);
+                    // console.log("Parsed Response:", parsedResponse);
+
+                    // Update the state with parsed data
+                    setHotels(parsedResponse.Hotels || []);
+                    setItinerary(parsedResponse.Itinerary || []);
+                } catch (error) {
+                    // console.error("Error generating travel plan:", error);
+                    alert("Error generating travel plan. Please try again later.");
+                }
+
+                setHotels(parsedResponse.Hotels || []);
+                setItinerary(parsedResponse.Itinerary || []);
             }
-          }
-        }
-      }
-      
 
-        console.log("Trip Data2:", tripData);
-  
-        setTripData(tripData);
-        setLoading(false);
-      }
-    };
-  
-    generateTravelPlan();
-  }, [formData]);
-  
+        };
+        generateTravelPlan();
+    }, [formData]);
 
-  if (loading) {
-    return <div className="loading">Loading your travel plan...</div>;
-  }
+    useEffect(() => {
+        // Log updated state values after they are set
+        // console.log("Hotels:", hotels);
+        // console.log("Itinerary:", itinerary);
+    }, [hotels, itinerary]);
 
-  return (
-    <div className="travel-plan">
-      <h1>Your Travel Plan for {formData.destination}</h1>
 
-      {/* Hotels Section */}
-      <div className="hotels-section">
-        <h2>Hotels</h2>
-        {tripData?.hotels?.map((hotel, index) => (
-          <div key={index} className="hotel-card">
-            <img src={hotel["hotel image url"]} alt={hotel.HotelName} />
-            <h3>{hotel.HotelName}</h3>
-            <p>{hotel.descriptions}</p>
-            <p>Price: ₹{hotel.Price}</p>
-            <p>Rating: {hotel.rating}</p>
-          </div>
-        ))}
-      </div>
+    return (
+        <>
+            <Header />
 
-      {/* Itinerary Section */}
-      <div className="itinerary-section">
-        <h2>Itinerary</h2>
-        {tripData?.itinerary?.days.map((day, index) => (
-          <div key={index} className="day-plan">
-            <h3>Day {day.day}</h3>
-            <p>Best Time to Visit: {day["best time to visit"]}</p>
-            <div className="places">
-              {day.places.map((place, idx) => (
-                <div key={idx} className="place-card">
-                  <img src={place["Place Image Url"]} alt={place.placeName} />
-                  <h4>{place.placeName}</h4>
-                  <p>{place["Place Details"]}</p>
-                  <p>Ticket Price: {place["ticket Pricing"]}</p>
-                  <p>Rating: {place.rating}</p>
-                  <p>Travel Time: {place["T ime to travel"]}</p>
+            <div className="travel-plan">
+                <h1 className="plan-title"><span style={{fontSize:'18px'}}>Your Travel Plan for</span> <span style={{fontSize:'36px'}}>{formData.destination}✈️</span></h1>
+
+                {/* Hotels Section */}
+                <div className="hotels-section">
+                    <h2 className="plan-subtitles">Hotels</h2>
+
+                    <div className="hotels">
+                        {hotels.map((hotel, index) => (
+                            <div key={index} className="hotel-card">
+                                <img src={hotelimg} alt={hotel.HotelName} style={{ maxWidth: '250px' }} />
+                                <div className="hotel-card-content p-3">
+                                    <h3 style={{fontWeight:'600'}}>{hotel.HotelName}</h3>
+                                    <p style={{fontSize:'13px'}}>{hotel.Descriptions}</p>
+                                    <div className="hotel-card-footer">
+                                        <p><span style={{fontSize:'20px'}}>💵</span> ₹{hotel.HotelPrice}</p>
+                                        <p><span style={{color:'orange', fontSize:'20px'}}><FaStar /></span> {hotel.HotelRating}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
-              ))}
+
+
+                <div className="itinerary-section mt-5">
+                    <h2 className="plan-subtitles">Day-By-Day Plan</h2>
+
+                    {/* Group the itinerary data by days */}
+                    {Object.entries(
+                        itinerary.reduce((acc, place) => {
+                            acc[place.Day] = acc[place.Day] || [];
+                            acc[place.Day].push(place);
+                            return acc;
+                        }, {})
+                    ).map(([day, places], index) => (
+                        <div key={index} className={`mt-2 day-plan ${index % 2 === 0 ? "left" : "right"}`}>
+                            <h3>{`Day ${day}`}</h3>
+                            <p className="best-time">
+                                Best Time to Visit: {places[0]?.BestTimeToVisit}
+                            </p>
+                            <div className="places">
+                                {places.map((place, placeIndex) => (
+                                    <div key={placeIndex} className="place-card">
+                                        <h4 style={{fontWeight:'600'}}>{place.PlaceName}</h4>
+                                        <p style={{fontSize:'13px'}}>{place.PlaceDetails}</p>
+                                        <p><strong>Ticket Price:</strong> ₹{place.TicketPricing}</p>
+                                        <p><span style={{color:'orange', fontSize:'20px'}}><FaStar /></span> {place.PlaceRating}</p>
+                                        <p><strong>Travel Time:</strong> {place.TravelTime}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+
+            <Footer />
+        </>
+    );
 }
 
 export default TravelPlan;
-

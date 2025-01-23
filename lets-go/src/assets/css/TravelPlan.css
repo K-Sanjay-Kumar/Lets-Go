@@ -30,6 +30,7 @@
   }
   
   .plan-subtitles {
+    font-weight: 600;
     margin-bottom: 10px;
     color: #333;
   }
@@ -38,6 +39,29 @@
     font-style: italic;
     margin-bottom: 15px;
   }
+
+
+
+  .hotels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .hotel-card {
+    flex: 1 1 calc(33.333% - 20px);
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .hotel-card-footer{
+    display: flex;
+    justify-content: space-between;
+  }
+
+
   
   .places {
     display: flex;
@@ -66,6 +90,8 @@
     color: #4caf50;
     margin-top: 50px;
   }
+
+
   
   .plan-title {
     font-family: 'Poppins', sans-serif; /* Or any other font from the list */
