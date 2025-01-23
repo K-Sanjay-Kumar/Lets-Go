@@ -1,0 +1,84 @@
+.travel-plan {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .plan-title {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .day-plan {
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .day-plan.left {
+    margin-left: 0;
+    border-left: 5px solid #4caf50;
+  }
+  
+  .day-plan.right {
+    margin-right: 0;
+    border-right: 5px solid #4caf50;
+  }
+  
+  .plan-subtitles {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .best-time {
+    font-style: italic;
+    margin-bottom: 15px;
+  }
+  
+  .places {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .place-card {
+    flex: 1 1 calc(33.333% - 20px);
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .place-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #4caf50;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #4caf50;
+    margin-top: 50px;
+  }
+  
+  .plan-title {
+    font-family: 'Poppins', sans-serif; /* Or any other font from the list */
+    color: #2C3E50;
+    letter-spacing: 2px;
+    line-height: 1.4;
+  }
+  
+  .plan-subtitles {
+    font-family: 'Montserrat', sans-serif;
+    color: #34495E;
+    margin-bottom: 10px;
+  }
+
+  
+  

@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './header';
-import Footer from './footer';
+import Header from '../constants/header';
+import Footer from '../constants/footer';
 import contact from '../assets/images/contact-us.jpg'
 
 const ContactUs = () => {

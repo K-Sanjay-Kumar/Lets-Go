@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import Header from "./header";
-import Footer from "./footer";
+import Header from "../constants/header";
+import Footer from "../constants/footer";
 import "../assets/css/places.css";
 import image1 from "../assets/images/bg-image-1.jpg";
 import image2 from "../assets/images/bg-image-2.png";
 import image3 from "../assets/images/bg-image-3.jpg";
-import { chatSession } from "../service/AIgenerate";
-
+import { FormDataContext } from "./FormDataContext";
 
 function Places() {
   const [currentBackground, setCurrentBackground] = useState(0);
@@ -56,28 +56,30 @@ function Places() {
     fetchLocations(value);
   };
 
-  const [formData, setFormData] = useState([]);
+  const [localFormData, setLocalFormData] = useState({}); // Local form state
+  const { setFormData } = useContext(FormDataContext); // Use context to set data globally
+  const navigate = useNavigate();
+
+
   const handleInputChange = (key, value) => {
-    setFormData({ ...formData, [key]: value });
+    setLocalFormData({ ...localFormData, [key]: value });
   };
 
-  const OnGenerateTrip = async() =>{
-    if(!formData?.budget||!formData?.destination||!formData?.noOfDays||!formData?.traveler){
+  const OnGenerateTrip = () => {
+    if (!localFormData?.budget || !localFormData?.destination || !localFormData?.noOfDays || !localFormData?.traveler) {
       toast.error("Please fill all the fields to generate your trip");
       return;
-    }
-    else if(formData?.noOfDays>5){
+    } else if (localFormData?.noOfDays > 5) {
       toast.error("You can only generate your trip for 5 days or less");
+      return;
+    } else if (localFormData?.noOfDays <= 0) {
+      toast.error("Enter Correct Number of Days");
       return;
     }
 
-    const PROMPT='Generate Travel Plan for Location: '+formData?.destination+', for '+formData?.noOfDays+' Days for '+formData?.traveler+' with a '+formData?.budget+' Budget, give me Hotels options list Give me a Hotels options list with HotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, rating, Time travel each of the location for'+formData?.noOfDays+' days with each day plan with best time to visit in JSON format.';
-    console.log(PROMPT);
-
-    const result = await chatSession.sendMessage(PROMPT);
-    console.log("Result:", result?.response?.text());
-
-  }
+    setFormData(localFormData); // Save formData to context
+    navigate("/travel_plan"); // Redirect to TravelPlan page
+  };
 
   return (
     <>
@@ -135,19 +137,19 @@ function Places() {
             <div className="travel-budget-section mt-5">
                 <h4>What is your budget 🪙?</h4>
                 <div className="travel-budget">
-                  <div className={`budget-card ${formData?.budget=='Cheap'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Cheap')}>
+                  <div className={`budget-card ${localFormData?.budget=='Cheap'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Cheap')}>
                     <h3>💵</h3>
                     <h4>Cheap</h4>
                     <p>Stay conscious of costs</p>
                   </div>
                   
-                  <div className={`budget-card ${formData?.budget=='Moderate'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Moderate')}>
+                  <div className={`budget-card ${localFormData?.budget=='Moderate'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Moderate')}>
                     <h3>💰</h3>
                     <h4>Moderate</h4>
                     <p>Keep cost on the average side</p>
                   </div>
 
-                  <div className={`budget-card ${formData?.budget=='Luxury'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Luxury')}>
+                  <div className={`budget-card ${localFormData?.budget=='Luxury'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Luxury')}>
                     <h3>💸</h3>
                     <h4>Luxury</h4>
                     <p>Don't worry about cost</p>
@@ -158,25 +160,25 @@ function Places() {
             <div className="travel-type mt-5">
               <h4>Who do you plan on traveling with on your next adventure🧍?</h4>
               <div className="types">
-                <div className={`type-card ${formData?.traveler=='1 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '1 People')}>
+                <div className={`type-card ${localFormData?.traveler=='1 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '1 People')}>
                   <h3>🧍</h3>
                   <h4>Just Me</h4>
                   <p>Traveling solo</p>
                 </div>
 
-                <div className={`type-card ${formData?.traveler=='2 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '2 People')}>
+                <div className={`type-card ${localFormData?.traveler=='2 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '2 People')}>
                   <h3>👩‍❤️‍👨</h3>
                   <h4>A Couple</h4>
                   <p>Traveling with a partner</p>
                 </div>
 
-                <div className={`type-card ${formData?.traveler=='3 to 5 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '3 to 5 People')}>
+                <div className={`type-card ${localFormData?.traveler=='3 to 5 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '3 to 5 People')}>
                   <h3>👨‍👩‍👧‍👦</h3>
                   <h4>Family</h4>
                   <p>Traveling with family</p>
                 </div>
 
-                <div className={`type-card ${formData?.traveler=='5 to 10 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '5 to 10 People')}>
+                <div className={`type-card ${localFormData?.traveler=='5 to 10 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '5 to 10 People')}>
                   <h3>👬</h3>
                   <h4>Friends</h4>
                   <p>Traveling with friends</p>

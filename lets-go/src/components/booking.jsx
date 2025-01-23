@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from "react-router-dom";
-import Header from './header';
-import Footer from './footer';
+import Header from '../constants/header';
+import Footer from '../constants/footer';
 import './booking.css';
 
 function Booking() {

@@ -2,7 +2,6 @@
 import {GoogleGenerativeAI} from "@google/generative-ai";
 import config from "../constants/config";
   
-  // const apiKey = 'AIzaSyBNPzQKurxUoQ6wk7nk6VxMq7fHqn-p-9Q';
   const genAI = new GoogleGenerativeAI(config.googleGenerativeAIKey);
   
   const model = genAI.getGenerativeModel({
@@ -18,7 +17,6 @@ import config from "../constants/config";
   };
   
 //   async function run() {
-
     export const chatSession = model.startChat({
       generationConfig,
       history: [

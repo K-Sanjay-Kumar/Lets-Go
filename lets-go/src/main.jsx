@@ -8,6 +8,8 @@ import Places from './components/places.jsx'
 import Mytrips from './components/mytrips.jsx'
 import Booking from './components/booking.jsx'
 import ContactUs from './components/contact-us.jsx'
+import TravelPlan from './components/travelPlan.jsx'
+import { FormDataProvider } from './components/FormDataContext.jsx'
 
 const router=createBrowserRouter([
   {
@@ -29,6 +31,10 @@ const router=createBrowserRouter([
   {
     path: '/Contact-Us',
     element: <ContactUs />
+  },
+  {
+    path: '/travel_plan',
+    element: <TravelPlan />
   }
 ])
 
@@ -38,5 +44,7 @@ createRoot(document.getElementById('root')).render(
     
   // </StrictMode>,
 
-  <RouterProvider router={router} />
+  <FormDataProvider>
+    <RouterProvider router={router} />
+  </FormDataProvider>
 )

@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from './header'
-import Footer from './footer'
+import Header from '../constants/header';
+import Footer from '../constants/footer';
 import mytrips from '../assets/images/mytrips.jpg'
 import trip1 from '../assets/images/bg-image-1.jpg'
 import { IoMdTime } from "react-icons/io";
