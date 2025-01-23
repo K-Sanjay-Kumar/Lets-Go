@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../service/firebaseConfig";
 import hotelimg from "../assets/images/Hotel.jpg";
 import "../assets/css/TravelPlan.css";
 import { FaStar } from "react-icons/fa";
@@ -12,36 +14,56 @@ function TravelPlan() {
     const { tripId } = useParams(); // Extract `tripId` from the URL
 
     useEffect(() => {
-        // Fetch travelPlans data from localStorage
-        const travelPlans = localStorage.getItem("travelPlans");
-        if (travelPlans) {
-          try {
-            const parsedData = JSON.parse(travelPlans); // Parse the JSON string
-            if (parsedData && parsedData.length > 0) {
-              // Find the specific trip data based on the id
-              const specificTripData = parsedData.find((data) => data.id === tripId);
-              //set destination
-              setDestination(specificTripData?.userSelection?.destination || "");
+        const fetchTripData = async () => {
+          const travelPlans = localStorage.getItem("travelPlans");
+          let specificTripData;
     
-              if (specificTripData) {
-                const tripData = JSON.parse(specificTripData.tripData || "{}"); // Parse `tripData` field
-                setHotels(tripData.Hotels || []);
-                setItinerary(tripData.Itinerary || []);
-                // setDestination(tripData.Destination || "");
-              } else {
-                console.error(`No trip data found for id: ${id}`);
+          if (travelPlans) {
+            try {
+              const parsedData = JSON.parse(travelPlans);
+              if (parsedData && parsedData.length > 0) {
+                specificTripData = parsedData.find((data) => data.id === tripId);
+    
+                if (specificTripData) {
+                  const tripData = JSON.parse(specificTripData.tripData || "{}");
+                  setDestination(specificTripData?.userSelection?.destination || "");
+                  setHotels(tripData.Hotels || []);
+                  setItinerary(tripData.Itinerary || []);
+                  setLoader(false); // Exit early if data is found
+                  return;
+                }
               }
+            } catch (error) {
+              console.error("Error parsing travelPlans data:", error);
+            }
+          }
+    
+          // Check Firestore database if not found in localStorage
+          try {
+            const docRef = doc(db, "Trips", tripId);
+            const docSnap = await getDoc(docRef);
+    
+            if (docSnap.exists()) {
+              const tripData = docSnap.data();
+              setDestination(tripData?.userSelection?.destination || "");
+              setHotels(tripData?.tripData?.Hotels || []);
+              setItinerary(tripData?.tripData?.Itinerary || []);
+            } else {
+              console.error(`No trip data found for id: ${tripId}`);
             }
           } catch (error) {
-            console.error("Error parsing travelPlans data:", error);
+            console.error("Error fetching trip data from database:", error);
           }
-        }
-        setLoader(false);
+    
+          setLoader(false); // Ensure loader is updated
+        };
+    
+        fetchTripData();
       }, [tripId]);
-
-    if (loader) {
+    
+      if (loader) {
         return <div>Loading...</div>;
-    }
+      }
 
     return (
         <div className="travel-plan">
