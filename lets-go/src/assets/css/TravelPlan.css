@@ -107,4 +107,8 @@
   }
 
   
+  .trip-card-title{
+    font-family: 'Poppins', sans-serif; /* Or any other font from the list */
+    color: #2C3E50;
+  }
   

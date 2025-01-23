@@ -6,8 +6,10 @@ import "../assets/css/places.css";
 import image1 from "../assets/images/bg-image-1.jpg";
 import image2 from "../assets/images/bg-image-2.png";
 import image3 from "../assets/images/bg-image-3.jpg";
-import { FormDataContext } from "./FormDataContext";
 import { FcGoogle } from "react-icons/fc";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
+import { chatSession } from "../service/AIgenerate";
 
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -15,14 +17,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../service/firebaseConfig";
+
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 
 function Places() {
   const [currentBackground, setCurrentBackground] = useState(0);
-
   const backgrounds = [image1, image2, image3]; // Background images array
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBackground((prev) => (prev + 1) % backgrounds.length);
@@ -31,9 +34,11 @@ function Places() {
     return () => clearInterval(interval);
   }, [backgrounds.length]);
 
+
   const [openDialogue, setOpenDialogue] = useState(false);
   const [destination, setDestination] = useState("");
   const [locations, setLocations] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // Fetch locations from API
   const fetchLocations = async (query) => {
@@ -57,13 +62,11 @@ function Places() {
     fetchLocations(value);
   };
 
-  const [localFormData, setLocalFormData] = useState({}); // Local form state
-  const { setFormData } = useContext(FormDataContext); // Use context to set data globally
-  const navigate = useNavigate();
-
+  const [FormData, setFormData] = useState({}); // Local form state
+  const navigate=useNavigate();
 
   const handleInputChange = (key, value) => {
-    setLocalFormData({ ...localFormData, [key]: value });
+    setFormData({ ...FormData, [key]: value });
   };
 
   const login = useGoogleLogin({
@@ -75,27 +78,67 @@ function Places() {
     onError:(error)=>console.log(error)
   });
 
-  const OnGenerateTrip = () => {
-
+  const OnGenerateTrip = async() => {
+    
     const user=localStorage.getItem('user');
     if(!user){
       setOpenDialogue(true);
       return;
     }
 
-    if (!localFormData?.budget || !localFormData?.destination || !localFormData?.noOfDays || !localFormData?.traveler) {
+    if (!FormData?.budget || !FormData?.destination || !FormData?.noOfDays || !FormData?.traveler) {
       toast.error("Please fill all the fields to generate your trip");
       return;
-    } else if (localFormData?.noOfDays > 5) {
+    } else if (FormData?.noOfDays > 5) {
       toast.error("You can only generate your trip for 5 days or less");
       return;
-    } else if (localFormData?.noOfDays <= 0) {
+    } else if (FormData?.noOfDays <= 0) {
       toast.error("Enter Correct Number of Days");
       return;
     }
 
-    setFormData(localFormData); // Save formData to context
-    navigate("/travel_plan"); // Redirect to TravelPlan page
+    setLoading(true);
+    const PROMPT = `Generate a travel plan for:
+    - Location: ${FormData?.destination}
+    - Duration: ${FormData?.noOfDays} days
+    - Travelers: ${FormData?.traveler}
+    - Budget: ${FormData?.budget}
+
+    Return the response in JSON format like this:
+
+    {
+    "Hotels": [
+        {
+        "HotelName": "string",
+        "HotelAddress": "string",
+        "HotelPrice": "number",
+        "HotelImageUrl": "string",
+        "HotelRating": "number",
+        "Descriptions": "string"
+        }
+    ],
+    "Itinerary": [
+        {
+        "Day": "number",
+        "PlaceName": "string",
+        "PlaceDetails": "string",
+        "PlaceImageUrl": "string",
+        "TicketPricing": "number",
+        "PlaceRating": "number",
+        "TravelTime": "string",
+        "BestTimeToVisit": "string"
+        }
+    ]
+    }
+
+    Make sure to include both "Hotels" and "Itinerary" keys in the response.
+    `;
+
+    const result = await chatSession.sendMessage(PROMPT);
+    console.log(result?.response?.text());
+    SaveTrip(result?.response?.text())
+    setLoading(false);
+
   };
 
   const GetUserProfile=(tokenResponse)=>{
@@ -110,6 +153,28 @@ function Places() {
       setOpenDialogue(false);
       OnGenerateTrip();
     })
+  }
+
+  const SaveTrip = async(TripData) =>{
+      const user=JSON.parse(localStorage.getItem('user'));
+      const docId=Date.now().toString();
+
+      await setDoc(doc(db, 'Trips', docId), {
+          userSelection: FormData,
+          tripData: JSON.parse(TripData),
+          userEmail: user?.email,
+          id: docId
+      });
+
+      // Save to Local Storage
+      const existingPlans = JSON.parse(localStorage.getItem("travelPlans")) || [];
+      localStorage.setItem(
+          "travelPlans",
+          JSON.stringify([...existingPlans, { id: docId, tripData: TripData, userSelection: FormData }])
+      );
+
+      navigate('/travel-plan/'+docId);
+      
   }
 
   return (
@@ -166,19 +231,19 @@ function Places() {
             <div className="travel-budget-section mt-5">
                 <h4>What is your budget 🪙?</h4>
                 <div className="travel-budget">
-                  <div className={`budget-card ${localFormData?.budget=='Cheap'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Cheap')}>
+                  <div className={`budget-card ${FormData?.budget=='Cheap'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Cheap')}>
                     <h3>💵</h3>
                     <h4>Cheap</h4>
                     <p>Stay conscious of costs</p>
                   </div>
                   
-                  <div className={`budget-card ${localFormData?.budget=='Moderate'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Moderate')}>
+                  <div className={`budget-card ${FormData?.budget=='Moderate'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Moderate')}>
                     <h3>💰</h3>
                     <h4>Moderate</h4>
                     <p>Keep cost on the average side</p>
                   </div>
 
-                  <div className={`budget-card ${localFormData?.budget=='Luxury'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Luxury')}>
+                  <div className={`budget-card ${FormData?.budget=='Luxury'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('budget', 'Luxury')}>
                     <h3>💸</h3>
                     <h4>Luxury</h4>
                     <p>Don't worry about cost</p>
@@ -189,25 +254,25 @@ function Places() {
             <div className="travel-type mt-5">
               <h4>Who do you plan on traveling with on your next adventure🧍?</h4>
               <div className="types">
-                <div className={`type-card ${localFormData?.traveler=='1 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '1 People')}>
+                <div className={`type-card ${FormData?.traveler=='1 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '1 People')}>
                   <h3>🧍</h3>
                   <h4>Just Me</h4>
                   <p>Traveling solo</p>
                 </div>
 
-                <div className={`type-card ${localFormData?.traveler=='2 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '2 People')}>
+                <div className={`type-card ${FormData?.traveler=='2 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '2 People')}>
                   <h3>👩‍❤️‍👨</h3>
                   <h4>A Couple</h4>
                   <p>Traveling with a partner</p>
                 </div>
 
-                <div className={`type-card ${localFormData?.traveler=='3 to 5 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '3 to 5 People')}>
+                <div className={`type-card ${FormData?.traveler=='3 to 5 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '3 to 5 People')}>
                   <h3>👨‍👩‍👧‍👦</h3>
                   <h4>Family</h4>
                   <p>Traveling with family</p>
                 </div>
 
-                <div className={`type-card ${localFormData?.traveler=='5 to 10 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '5 to 10 People')}>
+                <div className={`type-card ${FormData?.traveler=='5 to 10 People'&&'shadow-lg border-black'}`} onClick={() => handleInputChange('traveler', '5 to 10 People')}>
                   <h3>👬</h3>
                   <h4>Friends</h4>
                   <p>Traveling with friends</p>
@@ -216,7 +281,13 @@ function Places() {
             </div>
 
             <div className="generate-button text-center">
-              <button type="submit" className="btn btn-success mt-5" style={{fontSize: "20px"}} onClick={OnGenerateTrip}>Generate ✨</button>
+              <button type="submit" className="btn btn-success mt-5" style={{fontSize: "20px"}} 
+              disabled={loading}
+              onClick={OnGenerateTrip}>
+              {loading ? 
+                <AiOutlineLoading3Quarters className="animate-spin" />: 'Generate ✨'
+              }
+              </button>
             </div>
 
             <Dialog open={openDialogue} onClose={() => setOpenDialogue(false)}>

@@ -10,18 +10,17 @@ import Header from './constants/header.jsx'
 import Footer from './constants/footer.jsx'
 import Places from './components/places.jsx'
 import Mytrips from './components/mytrips.jsx'
-import Booking from './components/booking.jsx'
 import ContactUs from './components/contact-us.jsx'
 import TravelPlan from './components/travelPlan.jsx'
 import { FormDataProvider } from './components/FormDataContext.jsx'
 
 const router=createBrowserRouter([
   {
-    path: '/',
+    path: '/not-found',
     element: <App />
   },
   {
-    path: '/places',
+    path: '/',
     element: <Places />
   },
   {
@@ -29,15 +28,11 @@ const router=createBrowserRouter([
     element: <Mytrips />
   },
   {
-    path: '/booking/:id/:destination/:travelType/:price',
-    element: <Booking />
-  },
-  {
     path: '/Contact-Us',
     element: <ContactUs />
   },
   {
-    path: '/travel_plan',
+    path: '/travel-plan/:tripId',
     element: <TravelPlan />
   }
 ])
