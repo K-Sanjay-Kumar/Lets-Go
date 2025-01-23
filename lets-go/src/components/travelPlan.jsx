@@ -5,6 +5,8 @@ import hotelimg from "../assets/images/Hotel.jpg";
 import { FaStar } from "react-icons/fa";
 import gif from '../assets/images/loading.gif';
 import "../assets/css/TravelPlan.css";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../service/firebaseConfig";
 
 function TravelPlan() {
     const { formData } = useContext(FormDataContext);
@@ -18,8 +20,6 @@ function TravelPlan() {
         const generateTravelPlan = async () => {
             setLoader(true);
             if (formData) {
-                // const PROMPT = `Generate Travel Plan for Location: ${formData.destination}, for ${formData.noOfDays} Days for ${formData.traveler} with a ${formData.budget} Budget, give me a {Hotels} options list with {HotelName}, {HotelAddress}, {HotelPrice}, {hotelImageUrl}, {HotelRating}, {descriptions} and suggest itinerary with {placeName}, {PlaceDetails}, {PlaceImageUrl}, {ticketPricing}, {PlaceRating}, {TravelTime} each of the location for ${formData.noOfDays} days with each day plan with {BestTimeToVisit} in JSON format.`;
-                // const PROMPT = `Generate Travel Plan for Location: Goa, India, for 1 Days for 5 to 10 People with a Cheap Budget, give me {Hotels} options list with {HotelName}, {HotelAddress}, {HotelPrice}, {hotelImageUrl}, {HotelRating}, {descriptions} and suggest itinerary with {placeName}, {PlaceDetails}, {PlaceImageUrl}, {ticketPricing}, {PlaceRating}, {TravelTime} each of the location for 1 days with each day plan with best time to visit in JSON format.`;
                 const PROMPT = `Generate a travel plan for:
                 - Location: ${formData.destination}
                 - Duration: ${formData.noOfDays} days
@@ -63,7 +63,13 @@ function TravelPlan() {
 
                     // Parse the response into JSON
                     parsedResponse = JSON.parse(textResponse);
-                    // console.log("Parsed Response:", parsedResponse);
+
+                    // Handle the varying response formats
+                    if (Array.isArray(parsedResponse) && parsedResponse[0]?.Hotels && parsedResponse[0]?.Itinerary) {
+                        parsedResponse = parsedResponse[0];
+                    }
+
+                    console.log(parsedResponse);
 
                     // Update the state with parsed data
                     setHotels(parsedResponse.Hotels || []);
@@ -75,6 +81,10 @@ function TravelPlan() {
 
                 setHotels(parsedResponse.Hotels || []);
                 setItinerary(parsedResponse.Itinerary || []);
+                
+                // Save the trip data to Firebase
+                SaveTrip(parsedResponse);
+
                 setLoader(false);
             }
 
@@ -87,6 +97,18 @@ function TravelPlan() {
         // console.log("Hotels:", hotels);
         // console.log("Itinerary:", itinerary);
     }, [hotels, itinerary]);
+
+    const SaveTrip = async(TripData) =>{
+        const user=JSON.parse(localStorage.getItem('user'));
+        const docId=Date.now().toString();
+
+        await setDoc(doc(db, 'Trips', docId), {
+            userSelection: formData,
+            tripData: TripData,
+            userEmail: user?.email,
+            id: docId
+        });
+    }
 
 
     return (
@@ -124,7 +146,7 @@ function TravelPlan() {
 
                 </div>
 
-
+                {/* Itinerary Section */}
                 <div className="itinerary-section mt-5">
                     <h2 className="plan-subtitles">Day-By-Day Plan</h2>
 

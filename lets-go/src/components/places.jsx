@@ -31,14 +31,6 @@ function Places() {
     return () => clearInterval(interval);
   }, [backgrounds.length]);
 
-  const travelData = [
-      { id: 1, image: image1, guests: '5 to 10', title: "Beach Vacation", travelType: "Family", price: 1000 },
-      { id: 2, image: image2, guests: '1', title: "Mountain Hiking", travelType: "Solo", price: 800 },
-      { id: 3, image: image3, guests: '2', title: "City Exploration", travelType: "Couple", price: 1200 },
-      { id: 4, image: image1, guests: '3 to 4', title: "Desert Safari", travelType: "Friends", price: 900 },
-      { id: 5, image: image2, guests: '5 to 10', title: "Cruise Getaway", travelType: "Family", price: 1500 },
-  ];
-
   const [openDialogue, setOpenDialogue] = useState(false);
   const [destination, setDestination] = useState("");
   const [locations, setLocations] = useState([]);
@@ -86,7 +78,6 @@ function Places() {
   const OnGenerateTrip = () => {
 
     const user=localStorage.getItem('user');
-
     if(!user){
       setOpenDialogue(true);
       return;
