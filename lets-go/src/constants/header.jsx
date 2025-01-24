@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo_3.png';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import { TbLogout } from 'react-icons/tb';
@@ -38,7 +38,7 @@ function Header () {
       <Popover.Body>
         <Button variant="outline" onClick={()=>{ googleLogout();
                 localStorage.clear();
-                window.location.reload();
+                window.location.href = '/';
                 }} 
                 className="w-100 d-flex align-items-center justify-content-start">
           <TbLogout style={{ marginRight: '10px' }} />
@@ -52,8 +52,8 @@ function Header () {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/">
-          <img src={logo} alt='Lets Go' style={{maxWidth:'145px'}} />
+        <Navbar.Brand href="/" className='d-flex align-items-center'>
+          <img src={logo} alt='Lets Go' style={{maxWidth:'138px'}} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

@@ -6,7 +6,7 @@ import "../assets/css/places.css";
 import image1 from "../assets/images/bg-image-1.jpg";
 import image2 from "../assets/images/bg-image-2.png";
 import image3 from "../assets/images/bg-image-3.jpg";
-import logo from '../assets/logo.png';
+import logo from '../assets/logo_3.png';
 import { FcGoogle } from "react-icons/fc";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
@@ -137,7 +137,6 @@ function Places() {
     const result = await chatSession.sendMessage(PROMPT);
     console.log(result?.response?.text());
     SaveTrip(result?.response?.text())
-    setLoading(false);
 
   };
 
@@ -171,7 +170,8 @@ function Places() {
           "travelPlans",
           JSON.stringify([...existingPlans, { id: docId, tripData: TripData, userSelection: FormData }])
       );
-
+      
+      setLoading(false);
       navigate('/travel-plan/'+docId);
       
   }
@@ -294,16 +294,12 @@ function Places() {
                 <img src={logo} alt="Lets Go" style={{maxWidth:'122px'}}/>
               </DialogTitle>
               <DialogContent>
-                {/* You need to login to generate a trip. */}
                 <h3 className="font-bold text-lg">Sign In with Google</h3>
                 <p>Sign In to the App with Google authentication securely</p>
               </DialogContent>
               <DialogActions>
                 <Button onClick={() => setOpenDialogue(false)}>Close</Button>
-                {/* Add a button to redirect to the login page */}
-                
                 <Button className="login-button"  onClick={login}   ><FcGoogle className="login-google-icon"/> &nbsp; Login</Button> 
-              
               </DialogActions>
             </Dialog>
 

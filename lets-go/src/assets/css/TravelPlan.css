@@ -1,4 +1,4 @@
-.travel-plan {
+/* .travel-plan {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -94,7 +94,7 @@
 
   
   .plan-title {
-    font-family: 'Poppins', sans-serif; /* Or any other font from the list */
+    font-family: 'Poppins', sans-serif;
     color: #2C3E50;
     letter-spacing: 2px;
     line-height: 1.4;
@@ -108,7 +108,136 @@
 
   
   .trip-card-title{
-    font-family: 'Poppins', sans-serif; /* Or any other font from the list */
+    font-family: 'Poppins', sans-serif;
     color: #2C3E50;
   }
-  
+   */
+
+
+   /* Main Container */
+  .travel-plan {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Title Styling */
+  .plan-title {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #2C3E50;
+    font-size: 28px;
+    line-height: 1.4;
+    letter-spacing: 1px;
+  }
+
+  .plan-title span {
+    display: block;
+  }
+
+  .plan-title span:last-child {
+    font-size: 36px;
+    color: #4caf50;
+  }
+
+  /* Hotels Section */
+  .hotels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .hotel-card {
+    flex: 1 1 calc(30% - 20px);
+    padding: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background: linear-gradient(135deg, #f3f4f7, #ffffff);
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .hotel-card-image img {
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+
+  .hotel-card-content h3 {
+    font-size: 18px;
+    color: #2C3E50;
+    margin-bottom: 5px;
+  }
+
+  .hotel-card-content p {
+    font-size: 14px;
+    color: #6c757d;
+  }
+
+  /* Itinerary Section */
+  .itinerary-section {
+    margin-top: 50px;
+  }
+
+  .day-plan {
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #f3f4f7;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform 0.3s;
+  }
+
+  .day-plan h3 {
+    font-size: 20px;
+    color: #4caf50;
+    margin-bottom: 10px;
+  }
+
+  .best-time {
+    font-style: italic;
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 15px;
+  }
+
+  /* Places Section */
+  .places {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .place-card {
+    flex: 1 1 calc(30% - 20px);
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .place-card h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #34495E;
+    margin-bottom: 10px;
+  }
+
+  .place-card p {
+    font-size: 14px;
+    color: #6c757d;
+  }
+
+  /* Loading Spinner */
+  .loading {
+    text-align: center;
+    font-size: 18px;
+    color: #4caf50;
+    margin-top: 50px;
+  }
+

@@ -71,19 +71,18 @@ function TravelPlan() {
 
             {/* Hotels Section */}
             <div className="hotels-section">
-                <h2 className="plan-subtitles">Hotels</h2>
+                <h2 className="plan-subtitles" style={{fontWeight:'700'}}>Hotels:</h2>
 
                 <div className="hotels">
                     {hotels.map((hotel, index) => (
                         <div key={index} className="hotel-card">
-                            <img src={hotelimg} alt={hotel.HotelName} style={{ maxWidth: '250px' }} />
+                            <div className="hotel-card-image text-center">
+                              <img src={hotelimg} alt={hotel.HotelName} style={{ maxWidth: '250px' }} />
+                            </div>
                             <div className="hotel-card-content p-3">
-                                <h3 style={{fontWeight:'600'}}>{hotel.HotelName}</h3>
+                                <h3 style={{fontWeight:'600'}}>{hotel.HotelName} <span style={{fontSize:'15px'}}>( {hotel.HotelRating} <FaStar style={{color:'orange'}}/>)</span> </h3>
                                 <p style={{fontSize:'13px'}}>{hotel.Descriptions}</p>
-                                <div className="hotel-card-footer">
-                                    <p><span style={{fontSize:'20px'}}>💵</span> ₹{hotel.HotelPrice}</p>
-                                    <p><span style={{color:'orange', fontSize:'20px'}}><FaStar /></span> {hotel.HotelRating}</p>
-                                </div>
+                                <p><strong>Price: </strong> ₹{hotel.HotelPrice}</p>
                             </div>
                         </div>
                     ))}
@@ -93,7 +92,7 @@ function TravelPlan() {
 
             {/* Itinerary Section */}
             <div className="itinerary-section mt-5">
-                <h2 className="plan-subtitles">Day-By-Day Plan</h2>
+                <h2 className="plan-subtitles" style={{fontWeight:'700'}}>Day-By-Day Plan:</h2>
 
                 {/* Group the itinerary data by days */}
                 {Object.entries(
@@ -111,11 +110,10 @@ function TravelPlan() {
                         <div className="places">
                             {places.map((place, placeIndex) => (
                                 <div key={placeIndex} className="place-card">
-                                    <h4 style={{fontWeight:'600'}}>{place.PlaceName}</h4>
+                                    <h4 style={{fontWeight:'600', fontSize:'25px'}}>{place.PlaceName} <span style={{fontSize:'15px'}}> ({place.PlaceRating} <FaStar style={{color:'orange'}} />)</span> </h4>
                                     <p style={{fontSize:'13px'}}>{place.PlaceDetails}</p>
-                                    <p><strong>Ticket Price:</strong> ${place.TicketPricing}</p>
-                                    <p><span style={{color:'orange', fontSize:'20px'}}><FaStar /></span> {place.PlaceRating}</p>
                                     <p><strong>Travel Time:</strong> {place.TravelTime}</p>
+                                    <p><strong>Ticket Price:</strong> ₹{place.TicketPricing}</p>
                                 </div>
                             ))}
                         </div>
