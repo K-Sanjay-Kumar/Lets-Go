@@ -6,6 +6,7 @@ import "../assets/css/places.css";
 import image1 from "../assets/images/bg-image-1.jpg";
 import image2 from "../assets/images/bg-image-2.png";
 import image3 from "../assets/images/bg-image-3.jpg";
+import logo from '../assets/logo.png';
 import { FcGoogle } from "react-icons/fc";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
@@ -288,7 +289,9 @@ function Places() {
             </div>
 
             <Dialog open={openDialogue} onClose={() => setOpenDialogue(false)}>
-              <DialogTitle>Please Login</DialogTitle>
+              <DialogTitle>
+                <img src={logo} alt="Lets Go" style={{maxWidth:'122px'}}/>
+              </DialogTitle>
               <DialogContent>
                 {/* You need to login to generate a trip. */}
                 <h3 className="font-bold text-lg">Sign In with Google</h3>
