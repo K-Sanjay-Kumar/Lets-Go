@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import logo from '../assets/logo.png';
-import { TbLogout } from "react-icons/tb";
+import { Popover, OverlayTrigger } from 'react-bootstrap';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { TbLogout } from 'react-icons/tb';
 import axios from 'axios';
 
 
 function Header () {
+
+  const user= JSON.parse(localStorage.getItem('user'));
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
@@ -30,6 +33,21 @@ function Header () {
     })
   }
 
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Body>
+        <Button variant="outline" onClick={()=>{ googleLogout();
+                localStorage.clear();
+                window.location.reload();
+                }} 
+                className="w-100 d-flex align-items-center justify-content-start">
+          <TbLogout style={{ marginRight: '10px' }} />
+          Sign Out
+        </Button>
+      </Popover.Body>
+    </Popover>
+  );
+
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -39,22 +57,18 @@ function Header () {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            {/* <Nav.Link href="/">Home</Nav.Link> */}
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/My-Trips">My Trips</Nav.Link>
-            <Nav.Link href="/Contact-Us">Contact-Us</Nav.Link>
-          </Nav>
 
           {/* Add a right-aligned Sign In button */}
           <Nav className="ms-auto">
             {localStorage.getItem('user') ? 
-            <Button className='bg-black' onClick={()=>{
-              googleLogout();
-              localStorage.clear();
-              window.location.reload();
-            }}>
-              Sign Out <TbLogout /></Button> : 
+            <div>
+              <a href="/Genrate-Trip"><Button variant='outline' className='rounded-full' style={{marginRight:'15px'}}>Create Trip +</Button></a>
+              <a href="/My-Trips"><Button variant='outline' className='rounded-full' style={{marginRight:'15px'}}>My Trips</Button></a>
+              <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                <img src={user?.picture} alt={user?.name} className="user-profile" />
+              </OverlayTrigger>
+            </div>
+             : 
               
               <Button className='bg-black' onClick={login}>Sign In</Button>}
 

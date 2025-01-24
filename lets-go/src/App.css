@@ -1,0 +1,43 @@
+.rounded-full{
+    border: 1px solid black;
+    border-radius: 25px;
+}
+
+.user-profile{
+    max-height: 35px;
+    max-width: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.heading-title{
+    font-weight: 700;
+    color: red;
+}
+
+.heading-subtitle{
+    font-weight: 700;
+}
+
+
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 10px;
+  }
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  .card-body {
+    text-align: center;
+    padding: 20px;
+  }
+  .card-title {
+    font-weight: bold;
+    color: #333;
+  }
+  .card-text {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  

@@ -16,11 +16,11 @@ import { FormDataProvider } from './components/FormDataContext.jsx'
 
 const router=createBrowserRouter([
   {
-    path: '/not-found',
+    path: '/',
     element: <App />
   },
   {
-    path: '/',
+    path: '/Genrate-Trip',
     element: <Places />
   },
   {

@@ -81,7 +81,7 @@ function TravelPlan() {
                                 <h3 style={{fontWeight:'600'}}>{hotel.HotelName}</h3>
                                 <p style={{fontSize:'13px'}}>{hotel.Descriptions}</p>
                                 <div className="hotel-card-footer">
-                                    <p><span style={{fontSize:'20px'}}>💵</span> ${hotel.HotelPrice}</p>
+                                    <p><span style={{fontSize:'20px'}}>💵</span> ₹{hotel.HotelPrice}</p>
                                     <p><span style={{color:'orange', fontSize:'20px'}}><FaStar /></span> {hotel.HotelRating}</p>
                                 </div>
                             </div>

@@ -56,7 +56,7 @@ function Mytrips() {
                                         <span style={{ fontSize: '26px' }}>{trip.userSelection.destination}🧳</span>
                                     </h3>
                                     <p>
-                                        <IoMdTime style={{ fontSize: '20px' }} /> {trip.userSelection.noOfDays} days
+                                        <strong>Duration:</strong> {trip.userSelection.noOfDays} days
                                     </p>
                                     <p>
                                         <strong>Budget:</strong> {trip.userSelection.budget}

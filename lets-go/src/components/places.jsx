@@ -103,6 +103,7 @@ function Places() {
     - Travelers: ${FormData?.traveler}
     - Budget: ${FormData?.budget}
 
+    Ensure all prices are provided in Indian Rupees (INR) only.
     Return the response in JSON format like this:
 
     {
