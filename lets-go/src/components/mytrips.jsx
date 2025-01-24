@@ -67,7 +67,7 @@ function Mytrips() {
                             </div>
                         ))
                     ) : (
-                        <p>No trips found. Plan a new trip to get started!</p>
+                        <p className='text-center'>No trips found. Plan a new trip to get started!</p>
                     )}
                 </div>
             </div>

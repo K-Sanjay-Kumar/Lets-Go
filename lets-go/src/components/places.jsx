@@ -71,8 +71,6 @@ function Places() {
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      console.log(tokenResponse);
-      console.log("access tokken", tokenResponse.access_token)
       GetUserProfile(tokenResponse)
     },
     onError:(error)=>console.log(error)
@@ -148,7 +146,6 @@ function Places() {
         Accept: 'Application/json'
       }
     }).then((response)=>{
-      console.log("Response: ",response);
       localStorage.setItem('user',JSON.stringify(response.data));
       setOpenDialogue(false);
       OnGenerateTrip();
