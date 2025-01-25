@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import icon1 from './assets/images/ai-suggest.png';
 import icon2 from './assets/images/booking.png';
 import icon3 from './assets/images/notebook.png';
+import { FcGoogle } from "react-icons/fc";
 import './App.css';
 
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
@@ -35,21 +36,21 @@ function App() {
 
   const handleButtonClick = () => {
     if (user) {
-      // If user data exists, redirect to /Generate-trip
       navigate('/Genrate-Trip');
     } else {
-      // If user data doesn't exist, execute login
       login();
     }
   };
 
   return (
     <>
-      {/* Hero Section */}
+       {/* Hero Section  */}
       <div className="hero-section text-center">
         <h1 className="heading-title">Discover Your Next Adventure with AI</h1>
         <h2 className="heading-subtitle">Plan Your Trip at Your Fingertips</h2>
-        <Button className="btn mt-4 bg-black" onClick={handleButtonClick}>Get Started</Button>
+        <Button className="btn mt-4 bg-black" onClick={handleButtonClick}>
+          {user ? 'Get Started' : <><FcGoogle className="login-google-icon"/> Login with Google</>}
+        </Button>
       </div>
 
       {/* Features Section */}
