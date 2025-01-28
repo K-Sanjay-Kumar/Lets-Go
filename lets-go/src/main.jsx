@@ -3,7 +3,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import config from './constants/config.jsx';
 import './index.css'
 import App from './App.jsx'
 import Header from './constants/header.jsx'
@@ -44,7 +43,7 @@ createRoot(document.getElementById('root')).render(
   // </StrictMode>,
 
   <FormDataProvider>
-    <GoogleOAuthProvider clientId={config.google_Auth_Client_Id}>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
       <Header />
         <RouterProvider router={router} />
       <Footer />

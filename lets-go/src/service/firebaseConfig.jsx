@@ -8,7 +8,7 @@ import { getFirestore } from "firebase/firestore"
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCxjWwUKyV3ym1c2iasveB9UrUf72cHZgI",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "trip-generator-b5650.firebaseapp.com",
   projectId: "trip-generator-b5650",
   storageBucket: "trip-generator-b5650.firebasestorage.app",
